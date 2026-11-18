@@ -13,8 +13,9 @@ balanceada (adaptada de Radenski, `mpi_mergesort.c`, GPL).
 | `src/paralelo.c` | versão original: `srun -n P ./paralelo n [delta]` (δ omitido = ⌈2n/(P+1)⌉) |
 | `src/balanceado.c` | versão balanceada: `srun -n P ./balanceado n [-i]` (`-i` = `MPI_Isend` + `MPI_Request_free` como Radenski) |
 | `config.sh` | **editar antes de tudo**: N, nós, partição, ambiente |
-| `slurm/*.sbatch` | jobs: calibração, sequenciais, original 1–31, balanceada 2–32, sobrecarga 63–1023 |
-| `slurm/submete.sh` | compila e submete tudo nos mesmos nós |
+| `MEDICOES.md` | configuração de cada medição exigida (P, δ, nós, distribuição, `yield`) e o script de cada uma |
+| `slurm/<configuração>.sbatch` | um job por configuração: `calibra`, `seq-t1`, `seq-arvore-original`, `seq-arvore-balanceada`, `original`, `balanceada`, `sobrecarga-yield0`, `sobrecarga-yield1` e `balanceada-isend` (extra) |
+| `slurm/submete.sh` | compila e submete todas as configurações (ou só as indicadas pelo nome) nos mesmos nós |
 | `analise/analisa.py` | lê `resultados/*.out` e calcula tempos (mediana, mín., máx.), S, S^δ e E, com gráficos, em `resultados/analise/` |
 
 Cada execução imprime uma linha `RESULTADO` (`versao`, `P`, `n`, `delta`,
@@ -29,7 +30,8 @@ Cada execução imprime uma linha `RESULTADO` (`versao`, `P`, `n`, `delta`,
 3. Calibrar o tamanho do vetor:
    `./slurm/submete.sh calibra` e ver `resultados/t3-calibra-*.out`.
    Escolher N com T1 entre 30 e 60 s (o tempo cresce com N²) e gravar em `config.sh`.
-4. Submeter tudo: `./slurm/submete.sh`. Confira em cada `.out`:
+4. Submeter tudo: `./slurm/submete.sh` (ou só algumas configurações:
+   `./slurm/submete.sh original seq-t1`; ver `MEDICOES.md`). Confira em cada `.out`:
    o `lscpu`, as linhas `DISTRIBUICAO` (processos por nó) e `verificacao=OK`.
 5. `make analise` (precisa de Python 3 com matplotlib): gera
    `resultados/analise/resumo.md`, `speedup.png` e `sobrecarga.png`.

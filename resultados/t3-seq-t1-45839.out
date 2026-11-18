@@ -1,6 +1,6 @@
-==== job 45773 (t3-calibra) em 2026-11-18 09:42:44
-nos: atlantica03   N=250000   REPS=10
----- lscpu (nó atlantica03)
+==== job 45839 (t3-seq-t1) em 2026-11-18 19:46:18
+nos: atlantica05   N=200000   REPS=10
+---- lscpu (nó atlantica05)
 Architecture:                    x86_64
 CPU op-mode(s):                  32-bit, 64-bit
 Byte Order:                      Little Endian
@@ -16,8 +16,8 @@ CPU family:                      6
 Model:                           26
 Model name:                      Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
 Stepping:                        5
-CPU MHz:                         1633.251
-BogoMIPS:                        4521.92
+CPU MHz:                         1678.335
+BogoMIPS:                        4522.06
 Virtualization:                  VT-x
 L1d cache:                       256 KiB
 L1i cache:                       256 KiB
@@ -47,7 +47,23 @@ mpirun (Open MPI) 4.1.1
 ---- variáveis OMPI no ambiente
 (nenhuma)
 ====
-RESULTADO versao=seq P=1 n=150000 delta=150000 folhas=1 menor_folha=150000 maior_folha=150000 tempo=22.619272 verificacao=OK
-RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.326719 verificacao=OK
-RESULTADO versao=seq P=1 n=250000 delta=250000 folhas=1 menor_folha=250000 maior_folha=250000 tempo=63.046996 verificacao=OK
-RESULTADO versao=seq P=1 n=300000 delta=300000 folhas=1 menor_folha=300000 maior_folha=300000 tempo=90.790359 verificacao=OK
+---- repeticao 1
+RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.315514 verificacao=OK
+---- repeticao 2
+RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.294402 verificacao=OK
+---- repeticao 3
+RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.308694 verificacao=OK
+---- repeticao 4
+RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.312109 verificacao=OK
+---- repeticao 5
+RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.305163 verificacao=OK
+---- repeticao 6
+RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.316474 verificacao=OK
+---- repeticao 7
+RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.318867 verificacao=OK
+---- repeticao 8
+RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.316303 verificacao=OK
+---- repeticao 9
+RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.309617 verificacao=OK
+---- repeticao 10
+RESULTADO versao=seq P=1 n=200000 delta=200000 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.327519 verificacao=OK

@@ -1,0 +1,514 @@
+==== job 45847 (t3-sobrecarga-yield1) em 2026-11-18 20:29:07
+nos: atlantica[05-06]   N=200000   REPS=10
+---- lscpu (nó atlantica05)
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   40 bits physical, 48 bits virtual
+CPU(s):                          16
+On-line CPU(s) list:             0-15
+Thread(s) per core:              2
+Core(s) per socket:              4
+Socket(s):                       2
+NUMA node(s):                    2
+Vendor ID:                       GenuineIntel
+CPU family:                      6
+Model:                           26
+Model name:                      Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+Stepping:                        5
+CPU MHz:                         1646.598
+BogoMIPS:                        4522.06
+Virtualization:                  VT-x
+L1d cache:                       256 KiB
+L1i cache:                       256 KiB
+L2 cache:                        2 MiB
+L3 cache:                        16 MiB
+NUMA node0 CPU(s):               0,2,4,6,8,10,12,14
+NUMA node1 CPU(s):               1,3,5,7,9,11,13,15
+Vulnerability Itlb multihit:     KVM: Mitigation: Split huge pages
+Vulnerability L1tf:              Mitigation; PTE Inversion; VMX conditional cache flushes, SMT vulnerable
+Vulnerability Mds:               Vulnerable: Clear CPU buffers attempted, no microcode; SMT vulnerable
+Vulnerability Meltdown:          Mitigation; PTI
+Vulnerability Mmio stale data:   Unknown: No mitigations
+Vulnerability Retbleed:          Not affected
+Vulnerability Spec store bypass: Mitigation; Speculative Store Bypass disabled via prctl and seccomp
+Vulnerability Spectre v1:        Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:        Mitigation; Retpolines, IBPB conditional, IBRS_FW, STIBP conditional, RSB filling, PBRSB-eIBRS Not affected
+Vulnerability Srbds:             Not affected
+Vulnerability Tsx async abort:   Not affected
+Flags:                           fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid dtherm ida flush_l1d
+---- como o Slurm conta as CPUs deste nó (os scripts supõem CPUTot=16)
+CoresPerSocket=4 CPUTot=16 Sockets=2 ThreadsPerCore=2 
+---- Open MPI
+mpirun (Open MPI) 4.1.1
+
+            MCA mpi base: parameter "mpi_yield_when_idle" (current value: "true", data source: environment, level: 5 tuner/detail, type: bool)
+                          Yield the processor when waiting for MPI communication (for MPI processes, will default to 1 when oversubscribing nodes)
+---- variáveis OMPI no ambiente
+OMPI_MCA_mpi_yield_when_idle=1
+====
+DISTRIBUICAO P=63 (srun -N 2 -n 63 -c 1 --distribution=cyclic --cpu-bind=none  --overcommit):      32 atlantica05      31 atlantica06 
+DISTRIBUICAO P=127 (srun -N 2 -n 127 -c 1 --distribution=cyclic --cpu-bind=none  --overcommit):      64 atlantica05      63 atlantica06 
+DISTRIBUICAO P=255 (srun -N 2 -n 255 -c 1 --distribution=cyclic --cpu-bind=none  --overcommit):     128 atlantica05     127 atlantica06 
+DISTRIBUICAO P=511 (srun -N 2 -n 511 -c 1 --distribution=cyclic --cpu-bind=none  --overcommit):     256 atlantica05     255 atlantica06 
+DISTRIBUICAO P=1023 (srun -N 2 -n 1023 -c 1 --distribution=cyclic --cpu-bind=none  --overcommit):     512 atlantica05     511 atlantica06 
+---- repeticao 1
+RESULTADO versao=original P=63 n=200000 delta=6250 yield=1 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.243067 verificacao=OK
+NIVEL versao=original P=63 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.242094 intercala=0.000972 ocupacao=0.0040
+NIVEL versao=original P=63 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002964 conquista=0.000000 espera_filhos=0.230601 intercala=0.000513 ocupacao=0.0021
+NIVEL versao=original P=63 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006821 conquista=0.000000 espera_filhos=0.213002 intercala=0.000247 ocupacao=0.0010
+NIVEL versao=original P=63 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.011206 conquista=0.000000 espera_filhos=0.186426 intercala=0.000155 ocupacao=0.0006
+NIVEL versao=original P=63 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.020915 conquista=0.000000 espera_filhos=0.143533 intercala=0.000079 ocupacao=0.0003
+NIVEL versao=original P=63 yield=1 nivel=5 procs=32 papel=folha tam=6250 espera_pai=0.032145 conquista=0.106059 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.4363
+RESULTADO versao=original P=127 n=200000 delta=3125 yield=1 folhas=64 menor_folha=3125 maior_folha=3125 tempo=0.153163 verificacao=OK
+NIVEL versao=original P=127 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.152127 intercala=0.001035 ocupacao=0.0068
+NIVEL versao=original P=127 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002854 conquista=0.000000 espera_filhos=0.132463 intercala=0.000541 ocupacao=0.0035
+NIVEL versao=original P=127 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.008055 conquista=0.000000 espera_filhos=0.115873 intercala=0.000288 ocupacao=0.0019
+NIVEL versao=original P=127 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.018422 conquista=0.000000 espera_filhos=0.093404 intercala=0.000178 ocupacao=0.0012
+NIVEL versao=original P=127 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.027831 conquista=0.000000 espera_filhos=0.074987 intercala=0.000082 ocupacao=0.0005
+NIVEL versao=original P=127 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.034921 conquista=0.000000 espera_filhos=0.057019 intercala=0.000044 ocupacao=0.0003
+NIVEL versao=original P=127 yield=1 nivel=6 procs=64 papel=folha tam=3125 espera_pai=0.042612 conquista=0.036059 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.2354
+RESULTADO versao=original P=255 n=200000 delta=1563 yield=1 folhas=128 menor_folha=1562 maior_folha=1563 tempo=0.190322 verificacao=OK
+NIVEL versao=original P=255 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.189132 intercala=0.001189 ocupacao=0.0062
+NIVEL versao=original P=255 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.013013 conquista=0.000000 espera_filhos=0.162773 intercala=0.000643 ocupacao=0.0034
+NIVEL versao=original P=255 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.020311 conquista=0.000000 espera_filhos=0.145945 intercala=0.000362 ocupacao=0.0019
+NIVEL versao=original P=255 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.030873 conquista=0.000000 espera_filhos=0.128152 intercala=0.000215 ocupacao=0.0011
+NIVEL versao=original P=255 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.042725 conquista=0.000000 espera_filhos=0.097850 intercala=0.000095 ocupacao=0.0005
+NIVEL versao=original P=255 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.053852 conquista=0.000000 espera_filhos=0.070750 intercala=0.000066 ocupacao=0.0003
+NIVEL versao=original P=255 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.065204 conquista=0.000000 espera_filhos=0.045304 intercala=0.000024 ocupacao=0.0001
+NIVEL versao=original P=255 yield=1 nivel=7 procs=128 papel=folha tam=1562 espera_pai=0.076503 conquista=0.004528 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0238
+RESULTADO versao=original P=511 n=200000 delta=782 yield=1 folhas=256 menor_folha=781 maior_folha=782 tempo=0.252045 verificacao=OK
+NIVEL versao=original P=511 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.247482 intercala=0.004562 ocupacao=0.0181
+NIVEL versao=original P=511 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.012494 conquista=0.000000 espera_filhos=0.221838 intercala=0.000645 ocupacao=0.0026
+NIVEL versao=original P=511 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.033292 conquista=0.000000 espera_filhos=0.188323 intercala=0.001217 ocupacao=0.0048
+NIVEL versao=original P=511 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.047044 conquista=0.000000 espera_filhos=0.161490 intercala=0.000189 ocupacao=0.0007
+NIVEL versao=original P=511 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.059814 conquista=0.000000 espera_filhos=0.134577 intercala=0.000154 ocupacao=0.0006
+NIVEL versao=original P=511 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.071735 conquista=0.000000 espera_filhos=0.103234 intercala=0.000052 ocupacao=0.0002
+NIVEL versao=original P=511 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.084649 conquista=0.000000 espera_filhos=0.072340 intercala=0.000029 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.097930 conquista=0.000000 espera_filhos=0.041497 intercala=0.000016 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=8 procs=256 papel=folha tam=781 espera_pai=0.109488 conquista=0.000941 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0037
+RESULTADO versao=original P=1023 n=200000 delta=391 yield=1 folhas=512 menor_folha=390 maior_folha=391 tempo=0.538686 verificacao=OK
+NIVEL versao=original P=1023 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000001 conquista=0.000000 espera_filhos=0.537260 intercala=0.001425 ocupacao=0.0026
+NIVEL versao=original P=1023 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.058187 conquista=0.000000 espera_filhos=0.423136 intercala=0.000664 ocupacao=0.0012
+NIVEL versao=original P=1023 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.099900 conquista=0.000000 espera_filhos=0.327300 intercala=0.000347 ocupacao=0.0006
+NIVEL versao=original P=1023 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.131421 conquista=0.000000 espera_filhos=0.257877 intercala=0.000190 ocupacao=0.0004
+NIVEL versao=original P=1023 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.150836 conquista=0.000000 espera_filhos=0.204417 intercala=0.000107 ocupacao=0.0002
+NIVEL versao=original P=1023 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.168534 conquista=0.000000 espera_filhos=0.156970 intercala=0.000060 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.185856 conquista=0.000000 espera_filhos=0.115210 intercala=0.000028 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.202681 conquista=0.000000 espera_filhos=0.078365 intercala=0.000009 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=8 procs=256 papel=interno tam=781 espera_pai=0.219695 conquista=0.000000 espera_filhos=0.041628 intercala=0.000005 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=9 procs=512 papel=folha tam=391 espera_pai=0.236652 conquista=0.000208 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0004
+---- repeticao 2
+RESULTADO versao=original P=63 n=200000 delta=6250 yield=1 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.205154 verificacao=OK
+NIVEL versao=original P=63 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.204242 intercala=0.000912 ocupacao=0.0044
+NIVEL versao=original P=63 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003527 conquista=0.000000 espera_filhos=0.183384 intercala=0.000520 ocupacao=0.0025
+NIVEL versao=original P=63 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.007726 conquista=0.000000 espera_filhos=0.165304 intercala=0.000290 ocupacao=0.0014
+NIVEL versao=original P=63 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.016039 conquista=0.000000 espera_filhos=0.149799 intercala=0.000151 ocupacao=0.0007
+NIVEL versao=original P=63 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.022264 conquista=0.000000 espera_filhos=0.129502 intercala=0.000080 ocupacao=0.0004
+NIVEL versao=original P=63 yield=1 nivel=5 procs=32 papel=folha tam=6250 espera_pai=0.032107 conquista=0.100321 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.4890
+RESULTADO versao=original P=127 n=200000 delta=3125 yield=1 folhas=64 menor_folha=3125 maior_folha=3125 tempo=0.174742 verificacao=OK
+NIVEL versao=original P=127 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.173717 intercala=0.001024 ocupacao=0.0059
+NIVEL versao=original P=127 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.008896 conquista=0.000000 espera_filhos=0.156339 intercala=0.000513 ocupacao=0.0029
+NIVEL versao=original P=127 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.015212 conquista=0.000000 espera_filhos=0.139709 intercala=0.000288 ocupacao=0.0016
+NIVEL versao=original P=127 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.022378 conquista=0.000000 espera_filhos=0.117593 intercala=0.000161 ocupacao=0.0009
+NIVEL versao=original P=127 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.032739 conquista=0.000000 espera_filhos=0.094940 intercala=0.000076 ocupacao=0.0004
+NIVEL versao=original P=127 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.040779 conquista=0.000000 espera_filhos=0.072115 intercala=0.000043 ocupacao=0.0002
+NIVEL versao=original P=127 yield=1 nivel=6 procs=64 papel=folha tam=3125 espera_pai=0.050381 conquista=0.046118 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.2639
+RESULTADO versao=original P=255 n=200000 delta=1563 yield=1 folhas=128 menor_folha=1562 maior_folha=1563 tempo=0.184499 verificacao=OK
+NIVEL versao=original P=255 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.183310 intercala=0.001189 ocupacao=0.0064
+NIVEL versao=original P=255 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.011469 conquista=0.000000 espera_filhos=0.161874 intercala=0.000598 ocupacao=0.0032
+NIVEL versao=original P=255 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.021063 conquista=0.000000 espera_filhos=0.139729 intercala=0.000346 ocupacao=0.0019
+NIVEL versao=original P=255 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.030651 conquista=0.000000 espera_filhos=0.120826 intercala=0.000223 ocupacao=0.0012
+NIVEL versao=original P=255 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.038489 conquista=0.000000 espera_filhos=0.098328 intercala=0.000159 ocupacao=0.0009
+NIVEL versao=original P=255 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.048248 conquista=0.000000 espera_filhos=0.072022 intercala=0.000082 ocupacao=0.0004
+NIVEL versao=original P=255 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.058464 conquista=0.000000 espera_filhos=0.046291 intercala=0.000026 ocupacao=0.0001
+NIVEL versao=original P=255 yield=1 nivel=7 procs=128 papel=folha tam=1562 espera_pai=0.070813 conquista=0.005659 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0307
+RESULTADO versao=original P=511 n=200000 delta=782 yield=1 folhas=256 menor_folha=781 maior_folha=782 tempo=0.250017 verificacao=OK
+NIVEL versao=original P=511 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.247445 intercala=0.002570 ocupacao=0.0103
+NIVEL versao=original P=511 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.012852 conquista=0.000000 espera_filhos=0.217880 intercala=0.000641 ocupacao=0.0026
+NIVEL versao=original P=511 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.031640 conquista=0.000000 espera_filhos=0.189053 intercala=0.000340 ocupacao=0.0014
+NIVEL versao=original P=511 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.045955 conquista=0.000000 espera_filhos=0.163934 intercala=0.000191 ocupacao=0.0008
+NIVEL versao=original P=511 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.058421 conquista=0.000000 espera_filhos=0.132260 intercala=0.000108 ocupacao=0.0004
+NIVEL versao=original P=511 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.071735 conquista=0.000000 espera_filhos=0.102160 intercala=0.000054 ocupacao=0.0002
+NIVEL versao=original P=511 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.084234 conquista=0.000000 espera_filhos=0.072581 intercala=0.000029 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.096977 conquista=0.000000 espera_filhos=0.041777 intercala=0.000017 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=8 procs=256 papel=folha tam=781 espera_pai=0.108561 conquista=0.000821 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0033
+RESULTADO versao=original P=1023 n=200000 delta=391 yield=1 folhas=512 menor_folha=390 maior_folha=391 tempo=0.531481 verificacao=OK
+NIVEL versao=original P=1023 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.530063 intercala=0.001418 ocupacao=0.0027
+NIVEL versao=original P=1023 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.043959 conquista=0.000000 espera_filhos=0.423134 intercala=0.000675 ocupacao=0.0013
+NIVEL versao=original P=1023 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.094408 conquista=0.000000 espera_filhos=0.331367 intercala=0.000360 ocupacao=0.0007
+NIVEL versao=original P=1023 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.125491 conquista=0.000000 espera_filhos=0.256556 intercala=0.000183 ocupacao=0.0003
+NIVEL versao=original P=1023 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.144416 conquista=0.000000 espera_filhos=0.201660 intercala=0.000103 ocupacao=0.0002
+NIVEL versao=original P=1023 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.162147 conquista=0.000000 espera_filhos=0.155888 intercala=0.000054 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.179245 conquista=0.000000 espera_filhos=0.116077 intercala=0.000028 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.195744 conquista=0.000000 espera_filhos=0.078460 intercala=0.000009 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=8 procs=256 papel=interno tam=781 espera_pai=0.212371 conquista=0.000000 espera_filhos=0.042024 intercala=0.000008 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=9 procs=512 papel=folha tam=391 espera_pai=0.229523 conquista=0.000204 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0004
+---- repeticao 3
+RESULTADO versao=original P=63 n=200000 delta=6250 yield=1 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.232652 verificacao=OK
+NIVEL versao=original P=63 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.231712 intercala=0.000939 ocupacao=0.0040
+NIVEL versao=original P=63 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003842 conquista=0.000000 espera_filhos=0.215883 intercala=0.000533 ocupacao=0.0023
+NIVEL versao=original P=63 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.008093 conquista=0.000000 espera_filhos=0.204102 intercala=0.000272 ocupacao=0.0012
+NIVEL versao=original P=63 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.012454 conquista=0.000000 espera_filhos=0.180716 intercala=0.000145 ocupacao=0.0006
+NIVEL versao=original P=63 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.020455 conquista=0.000000 espera_filhos=0.147730 intercala=0.000079 ocupacao=0.0003
+NIVEL versao=original P=63 yield=1 nivel=5 procs=32 papel=folha tam=6250 espera_pai=0.031941 conquista=0.105961 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.4554
+RESULTADO versao=original P=127 n=200000 delta=3125 yield=1 folhas=64 menor_folha=3125 maior_folha=3125 tempo=0.156490 verificacao=OK
+NIVEL versao=original P=127 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.155454 intercala=0.001035 ocupacao=0.0066
+NIVEL versao=original P=127 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.004741 conquista=0.000000 espera_filhos=0.139605 intercala=0.000512 ocupacao=0.0033
+NIVEL versao=original P=127 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.012826 conquista=0.000000 espera_filhos=0.122577 intercala=0.000322 ocupacao=0.0021
+NIVEL versao=original P=127 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.026614 conquista=0.000000 espera_filhos=0.096103 intercala=0.000177 ocupacao=0.0011
+NIVEL versao=original P=127 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.034085 conquista=0.000000 espera_filhos=0.076801 intercala=0.000090 ocupacao=0.0006
+NIVEL versao=original P=127 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.040462 conquista=0.000000 espera_filhos=0.059945 intercala=0.000045 ocupacao=0.0003
+NIVEL versao=original P=127 yield=1 nivel=6 procs=64 papel=folha tam=3125 espera_pai=0.046445 conquista=0.039549 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.2527
+RESULTADO versao=original P=255 n=200000 delta=1563 yield=1 folhas=128 menor_folha=1562 maior_folha=1563 tempo=0.183797 verificacao=OK
+NIVEL versao=original P=255 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.182563 intercala=0.001233 ocupacao=0.0067
+NIVEL versao=original P=255 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.010283 conquista=0.000000 espera_filhos=0.163857 intercala=0.000623 ocupacao=0.0034
+NIVEL versao=original P=255 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.022819 conquista=0.000000 espera_filhos=0.141539 intercala=0.000328 ocupacao=0.0018
+NIVEL versao=original P=255 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.033419 conquista=0.000000 espera_filhos=0.120294 intercala=0.000361 ocupacao=0.0020
+NIVEL versao=original P=255 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.043290 conquista=0.000000 espera_filhos=0.093663 intercala=0.000156 ocupacao=0.0008
+NIVEL versao=original P=255 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.051316 conquista=0.000000 espera_filhos=0.068315 intercala=0.000069 ocupacao=0.0004
+NIVEL versao=original P=255 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.058699 conquista=0.000000 espera_filhos=0.044259 intercala=0.000033 ocupacao=0.0002
+NIVEL versao=original P=255 yield=1 nivel=7 procs=128 papel=folha tam=1562 espera_pai=0.070590 conquista=0.005677 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0309
+RESULTADO versao=original P=511 n=200000 delta=782 yield=1 folhas=256 menor_folha=781 maior_folha=782 tempo=0.247295 verificacao=OK
+NIVEL versao=original P=511 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.246004 intercala=0.001291 ocupacao=0.0052
+NIVEL versao=original P=511 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.013318 conquista=0.000000 espera_filhos=0.219804 intercala=0.000958 ocupacao=0.0039
+NIVEL versao=original P=511 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.034366 conquista=0.000000 espera_filhos=0.190721 intercala=0.000425 ocupacao=0.0017
+NIVEL versao=original P=511 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.047403 conquista=0.000000 espera_filhos=0.166455 intercala=0.000198 ocupacao=0.0008
+NIVEL versao=original P=511 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.061039 conquista=0.000000 espera_filhos=0.137189 intercala=0.000102 ocupacao=0.0004
+NIVEL versao=original P=511 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.070850 conquista=0.000000 espera_filhos=0.104661 intercala=0.000053 ocupacao=0.0002
+NIVEL versao=original P=511 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.085993 conquista=0.000000 espera_filhos=0.073292 intercala=0.000028 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.099123 conquista=0.000000 espera_filhos=0.041977 intercala=0.000015 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=8 procs=256 papel=folha tam=781 espera_pai=0.113085 conquista=0.000857 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0035
+RESULTADO versao=original P=1023 n=200000 delta=391 yield=1 folhas=512 menor_folha=390 maior_folha=391 tempo=0.549300 verificacao=OK
+NIVEL versao=original P=1023 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.547818 intercala=0.001482 ocupacao=0.0027
+NIVEL versao=original P=1023 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.042292 conquista=0.000000 espera_filhos=0.429733 intercala=0.000690 ocupacao=0.0013
+NIVEL versao=original P=1023 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.080536 conquista=0.000000 espera_filhos=0.321721 intercala=0.000345 ocupacao=0.0006
+NIVEL versao=original P=1023 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.120398 conquista=0.000000 espera_filhos=0.254761 intercala=0.000187 ocupacao=0.0003
+NIVEL versao=original P=1023 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.142024 conquista=0.000000 espera_filhos=0.200098 intercala=0.000108 ocupacao=0.0002
+NIVEL versao=original P=1023 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.155943 conquista=0.000000 espera_filhos=0.153871 intercala=0.000058 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.172643 conquista=0.000000 espera_filhos=0.114963 intercala=0.000026 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.188465 conquista=0.000000 espera_filhos=0.078212 intercala=0.000009 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=8 procs=256 papel=interno tam=781 espera_pai=0.203879 conquista=0.000000 espera_filhos=0.041729 intercala=0.000005 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=9 procs=512 papel=folha tam=391 espera_pai=0.222399 conquista=0.000222 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0004
+---- repeticao 4
+RESULTADO versao=original P=63 n=200000 delta=6250 yield=1 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.224080 verificacao=OK
+NIVEL versao=original P=63 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.223132 intercala=0.000947 ocupacao=0.0042
+NIVEL versao=original P=63 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002964 conquista=0.000000 espera_filhos=0.212547 intercala=0.000463 ocupacao=0.0021
+NIVEL versao=original P=63 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006724 conquista=0.000000 espera_filhos=0.194463 intercala=0.000284 ocupacao=0.0013
+NIVEL versao=original P=63 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.010566 conquista=0.000000 espera_filhos=0.166582 intercala=0.000153 ocupacao=0.0007
+NIVEL versao=original P=63 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.019401 conquista=0.000000 espera_filhos=0.132208 intercala=0.000084 ocupacao=0.0004
+NIVEL versao=original P=63 yield=1 nivel=5 procs=32 papel=folha tam=6250 espera_pai=0.028717 conquista=0.096459 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.4305
+RESULTADO versao=original P=127 n=200000 delta=3125 yield=1 folhas=64 menor_folha=3125 maior_folha=3125 tempo=0.150228 verificacao=OK
+NIVEL versao=original P=127 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.149154 intercala=0.001074 ocupacao=0.0071
+NIVEL versao=original P=127 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002721 conquista=0.000000 espera_filhos=0.134743 intercala=0.000585 ocupacao=0.0039
+NIVEL versao=original P=127 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.010029 conquista=0.000000 espera_filhos=0.115689 intercala=0.000273 ocupacao=0.0018
+NIVEL versao=original P=127 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.016599 conquista=0.000000 espera_filhos=0.099036 intercala=0.000206 ocupacao=0.0014
+NIVEL versao=original P=127 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.023184 conquista=0.000000 espera_filhos=0.078716 intercala=0.000078 ocupacao=0.0005
+NIVEL versao=original P=127 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.032936 conquista=0.000000 espera_filhos=0.058934 intercala=0.000044 ocupacao=0.0003
+NIVEL versao=original P=127 yield=1 nivel=6 procs=64 papel=folha tam=3125 espera_pai=0.040626 conquista=0.038752 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.2580
+RESULTADO versao=original P=255 n=200000 delta=1563 yield=1 folhas=128 menor_folha=1562 maior_folha=1563 tempo=0.189440 verificacao=OK
+NIVEL versao=original P=255 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.188206 intercala=0.001234 ocupacao=0.0065
+NIVEL versao=original P=255 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.011453 conquista=0.000000 espera_filhos=0.167461 intercala=0.000615 ocupacao=0.0032
+NIVEL versao=original P=255 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.023388 conquista=0.000000 espera_filhos=0.140256 intercala=0.000346 ocupacao=0.0018
+NIVEL versao=original P=255 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.035003 conquista=0.000000 espera_filhos=0.117169 intercala=0.000279 ocupacao=0.0015
+NIVEL versao=original P=255 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.043273 conquista=0.000000 espera_filhos=0.091482 intercala=0.000419 ocupacao=0.0022
+NIVEL versao=original P=255 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.053085 conquista=0.000000 espera_filhos=0.065297 intercala=0.000062 ocupacao=0.0003
+NIVEL versao=original P=255 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.059509 conquista=0.000000 espera_filhos=0.043216 intercala=0.000027 ocupacao=0.0001
+NIVEL versao=original P=255 yield=1 nivel=7 procs=128 papel=folha tam=1562 espera_pai=0.071837 conquista=0.004897 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0258
+RESULTADO versao=original P=511 n=200000 delta=782 yield=1 folhas=256 menor_folha=781 maior_folha=782 tempo=0.250071 verificacao=OK
+NIVEL versao=original P=511 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.248781 intercala=0.001289 ocupacao=0.0052
+NIVEL versao=original P=511 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.012155 conquista=0.000000 espera_filhos=0.220227 intercala=0.000902 ocupacao=0.0036
+NIVEL versao=original P=511 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.031181 conquista=0.000000 espera_filhos=0.190052 intercala=0.000401 ocupacao=0.0016
+NIVEL versao=original P=511 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.048346 conquista=0.000000 espera_filhos=0.164247 intercala=0.000195 ocupacao=0.0008
+NIVEL versao=original P=511 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.059227 conquista=0.000000 espera_filhos=0.135251 intercala=0.000109 ocupacao=0.0004
+NIVEL versao=original P=511 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.072153 conquista=0.000000 espera_filhos=0.103953 intercala=0.000069 ocupacao=0.0003
+NIVEL versao=original P=511 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.084355 conquista=0.000000 espera_filhos=0.073699 intercala=0.000030 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.097812 conquista=0.000000 espera_filhos=0.042203 intercala=0.000016 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=8 procs=256 papel=folha tam=781 espera_pai=0.109842 conquista=0.000887 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0035
+RESULTADO versao=original P=1023 n=200000 delta=391 yield=1 folhas=512 menor_folha=390 maior_folha=391 tempo=0.537781 verificacao=OK
+NIVEL versao=original P=1023 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000001 conquista=0.000000 espera_filhos=0.536379 intercala=0.001402 ocupacao=0.0026
+NIVEL versao=original P=1023 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.030653 conquista=0.000000 espera_filhos=0.424925 intercala=0.000658 ocupacao=0.0012
+NIVEL versao=original P=1023 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.084259 conquista=0.000000 espera_filhos=0.329032 intercala=0.000352 ocupacao=0.0007
+NIVEL versao=original P=1023 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.116681 conquista=0.000000 espera_filhos=0.255890 intercala=0.000183 ocupacao=0.0003
+NIVEL versao=original P=1023 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.138430 conquista=0.000000 espera_filhos=0.203513 intercala=0.000098 ocupacao=0.0002
+NIVEL versao=original P=1023 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.154358 conquista=0.000000 espera_filhos=0.155988 intercala=0.000056 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.171445 conquista=0.000000 espera_filhos=0.115426 intercala=0.000027 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.187990 conquista=0.000000 espera_filhos=0.078266 intercala=0.000009 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=8 procs=256 papel=interno tam=781 espera_pai=0.204682 conquista=0.000000 espera_filhos=0.041953 intercala=0.000005 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=9 procs=512 papel=folha tam=391 espera_pai=0.222123 conquista=0.000227 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0004
+---- repeticao 5
+RESULTADO versao=original P=63 n=200000 delta=6250 yield=1 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.218288 verificacao=OK
+NIVEL versao=original P=63 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.217324 intercala=0.000964 ocupacao=0.0044
+NIVEL versao=original P=63 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002967 conquista=0.000000 espera_filhos=0.204857 intercala=0.000461 ocupacao=0.0021
+NIVEL versao=original P=63 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.007765 conquista=0.000000 espera_filhos=0.191551 intercala=0.000315 ocupacao=0.0014
+NIVEL versao=original P=63 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.010881 conquista=0.000000 espera_filhos=0.173530 intercala=0.000148 ocupacao=0.0007
+NIVEL versao=original P=63 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.019905 conquista=0.000000 espera_filhos=0.145870 intercala=0.000080 ocupacao=0.0004
+NIVEL versao=original P=63 yield=1 nivel=5 procs=32 papel=folha tam=6250 espera_pai=0.032360 conquista=0.104337 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.4780
+RESULTADO versao=original P=127 n=200000 delta=3125 yield=1 folhas=64 menor_folha=3125 maior_folha=3125 tempo=0.158507 verificacao=OK
+NIVEL versao=original P=127 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.157487 intercala=0.001020 ocupacao=0.0064
+NIVEL versao=original P=127 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.006978 conquista=0.000000 espera_filhos=0.140670 intercala=0.000513 ocupacao=0.0032
+NIVEL versao=original P=127 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.014593 conquista=0.000000 espera_filhos=0.120576 intercala=0.000274 ocupacao=0.0017
+NIVEL versao=original P=127 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.023421 conquista=0.000000 espera_filhos=0.101647 intercala=0.000152 ocupacao=0.0010
+NIVEL versao=original P=127 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.030597 conquista=0.000000 espera_filhos=0.085013 intercala=0.000085 ocupacao=0.0005
+NIVEL versao=original P=127 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.036583 conquista=0.000000 espera_filhos=0.066205 intercala=0.000043 ocupacao=0.0003
+NIVEL versao=original P=127 yield=1 nivel=6 procs=64 papel=folha tam=3125 espera_pai=0.045556 conquista=0.041895 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.2643
+RESULTADO versao=original P=255 n=200000 delta=1563 yield=1 folhas=128 menor_folha=1562 maior_folha=1563 tempo=0.183785 verificacao=OK
+NIVEL versao=original P=255 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000001 conquista=0.000000 espera_filhos=0.182614 intercala=0.001171 ocupacao=0.0064
+NIVEL versao=original P=255 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.009534 conquista=0.000000 espera_filhos=0.162872 intercala=0.000603 ocupacao=0.0033
+NIVEL versao=original P=255 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.021471 conquista=0.000000 espera_filhos=0.138803 intercala=0.000416 ocupacao=0.0023
+NIVEL versao=original P=255 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.029701 conquista=0.000000 espera_filhos=0.121154 intercala=0.000278 ocupacao=0.0015
+NIVEL versao=original P=255 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.036102 conquista=0.000000 espera_filhos=0.094932 intercala=0.000211 ocupacao=0.0011
+NIVEL versao=original P=255 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.046105 conquista=0.000000 espera_filhos=0.067408 intercala=0.000063 ocupacao=0.0003
+NIVEL versao=original P=255 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.055256 conquista=0.000000 espera_filhos=0.045382 intercala=0.000024 ocupacao=0.0001
+NIVEL versao=original P=255 yield=1 nivel=7 procs=128 papel=folha tam=1562 espera_pai=0.065947 conquista=0.005157 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0281
+RESULTADO versao=original P=511 n=200000 delta=782 yield=1 folhas=256 menor_folha=781 maior_folha=782 tempo=0.249108 verificacao=OK
+NIVEL versao=original P=511 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.247819 intercala=0.001288 ocupacao=0.0052
+NIVEL versao=original P=511 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.012851 conquista=0.000000 espera_filhos=0.221590 intercala=0.000757 ocupacao=0.0030
+NIVEL versao=original P=511 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.033291 conquista=0.000000 espera_filhos=0.190359 intercala=0.000341 ocupacao=0.0014
+NIVEL versao=original P=511 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.047065 conquista=0.000000 espera_filhos=0.165203 intercala=0.000186 ocupacao=0.0007
+NIVEL versao=original P=511 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.060290 conquista=0.000000 espera_filhos=0.136690 intercala=0.000103 ocupacao=0.0004
+NIVEL versao=original P=511 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.073291 conquista=0.000000 espera_filhos=0.104132 intercala=0.000056 ocupacao=0.0002
+NIVEL versao=original P=511 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.086215 conquista=0.000000 espera_filhos=0.073156 intercala=0.000030 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.099363 conquista=0.000000 espera_filhos=0.041905 intercala=0.000017 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=8 procs=256 papel=folha tam=781 espera_pai=0.112211 conquista=0.000964 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0039
+RESULTADO versao=original P=1023 n=200000 delta=391 yield=1 folhas=512 menor_folha=390 maior_folha=391 tempo=0.552369 verificacao=OK
+NIVEL versao=original P=1023 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.550933 intercala=0.001435 ocupacao=0.0026
+NIVEL versao=original P=1023 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.048470 conquista=0.000000 espera_filhos=0.419644 intercala=0.004286 ocupacao=0.0078
+NIVEL versao=original P=1023 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.096809 conquista=0.000000 espera_filhos=0.326871 intercala=0.000379 ocupacao=0.0007
+NIVEL versao=original P=1023 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.128688 conquista=0.000000 espera_filhos=0.257716 intercala=0.000192 ocupacao=0.0003
+NIVEL versao=original P=1023 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.147173 conquista=0.000000 espera_filhos=0.204263 intercala=0.000107 ocupacao=0.0002
+NIVEL versao=original P=1023 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.165088 conquista=0.000000 espera_filhos=0.157897 intercala=0.000059 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.181738 conquista=0.000000 espera_filhos=0.116370 intercala=0.000024 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.198583 conquista=0.000000 espera_filhos=0.079501 intercala=0.000009 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=8 procs=256 papel=interno tam=781 espera_pai=0.215183 conquista=0.000000 espera_filhos=0.042314 intercala=0.000005 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=9 procs=512 papel=folha tam=391 espera_pai=0.232681 conquista=0.000224 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0004
+---- repeticao 6
+RESULTADO versao=original P=63 n=200000 delta=6250 yield=1 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.206896 verificacao=OK
+NIVEL versao=original P=63 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.205912 intercala=0.000983 ocupacao=0.0048
+NIVEL versao=original P=63 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002769 conquista=0.000000 espera_filhos=0.195553 intercala=0.000476 ocupacao=0.0023
+NIVEL versao=original P=63 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.008318 conquista=0.000000 espera_filhos=0.178807 intercala=0.000277 ocupacao=0.0013
+NIVEL versao=original P=63 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.015794 conquista=0.000000 espera_filhos=0.147437 intercala=0.000152 ocupacao=0.0007
+NIVEL versao=original P=63 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.019730 conquista=0.000000 espera_filhos=0.129422 intercala=0.000079 ocupacao=0.0004
+NIVEL versao=original P=63 yield=1 nivel=5 procs=32 papel=folha tam=6250 espera_pai=0.029556 conquista=0.101084 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.4886
+RESULTADO versao=original P=127 n=200000 delta=3125 yield=1 folhas=64 menor_folha=3125 maior_folha=3125 tempo=0.168058 verificacao=OK
+NIVEL versao=original P=127 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.167013 intercala=0.001044 ocupacao=0.0062
+NIVEL versao=original P=127 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.006996 conquista=0.000000 espera_filhos=0.151063 intercala=0.000514 ocupacao=0.0031
+NIVEL versao=original P=127 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.011434 conquista=0.000000 espera_filhos=0.136562 intercala=0.000285 ocupacao=0.0017
+NIVEL versao=original P=127 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.018936 conquista=0.000000 espera_filhos=0.116353 intercala=0.000159 ocupacao=0.0009
+NIVEL versao=original P=127 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.030794 conquista=0.000000 espera_filhos=0.090697 intercala=0.000088 ocupacao=0.0005
+NIVEL versao=original P=127 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.040191 conquista=0.000000 espera_filhos=0.067251 intercala=0.000047 ocupacao=0.0003
+NIVEL versao=original P=127 yield=1 nivel=6 procs=64 papel=folha tam=3125 espera_pai=0.047970 conquista=0.041909 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.2494
+RESULTADO versao=original P=255 n=200000 delta=1563 yield=1 folhas=128 menor_folha=1562 maior_folha=1563 tempo=0.186778 verificacao=OK
+NIVEL versao=original P=255 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.185491 intercala=0.001287 ocupacao=0.0069
+NIVEL versao=original P=255 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.007246 conquista=0.000000 espera_filhos=0.164478 intercala=0.000571 ocupacao=0.0031
+NIVEL versao=original P=255 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.019301 conquista=0.000000 espera_filhos=0.143586 intercala=0.000337 ocupacao=0.0018
+NIVEL versao=original P=255 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.027600 conquista=0.000000 espera_filhos=0.125266 intercala=0.000231 ocupacao=0.0012
+NIVEL versao=original P=255 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.034194 conquista=0.000000 espera_filhos=0.099158 intercala=0.000168 ocupacao=0.0009
+NIVEL versao=original P=255 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.044131 conquista=0.000000 espera_filhos=0.071686 intercala=0.000053 ocupacao=0.0003
+NIVEL versao=original P=255 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.054850 conquista=0.000000 espera_filhos=0.046093 intercala=0.000025 ocupacao=0.0001
+NIVEL versao=original P=255 yield=1 nivel=7 procs=128 papel=folha tam=1562 espera_pai=0.066672 conquista=0.004219 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0226
+RESULTADO versao=original P=511 n=200000 delta=782 yield=1 folhas=256 menor_folha=781 maior_folha=782 tempo=0.252707 verificacao=OK
+NIVEL versao=original P=511 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.250702 intercala=0.002004 ocupacao=0.0079
+NIVEL versao=original P=511 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.013611 conquista=0.000000 espera_filhos=0.223054 intercala=0.000964 ocupacao=0.0038
+NIVEL versao=original P=511 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.034664 conquista=0.000000 espera_filhos=0.189072 intercala=0.000353 ocupacao=0.0014
+NIVEL versao=original P=511 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.050318 conquista=0.000000 espera_filhos=0.162046 intercala=0.000211 ocupacao=0.0008
+NIVEL versao=original P=511 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.059713 conquista=0.000000 espera_filhos=0.133331 intercala=0.000103 ocupacao=0.0004
+NIVEL versao=original P=511 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.072683 conquista=0.000000 espera_filhos=0.102472 intercala=0.000055 ocupacao=0.0002
+NIVEL versao=original P=511 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.086144 conquista=0.000000 espera_filhos=0.071995 intercala=0.000030 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.098751 conquista=0.000000 espera_filhos=0.041204 intercala=0.000016 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=8 procs=256 papel=folha tam=781 espera_pai=0.110335 conquista=0.000925 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0037
+RESULTADO versao=original P=1023 n=200000 delta=391 yield=1 folhas=512 menor_folha=390 maior_folha=391 tempo=0.516174 verificacao=OK
+NIVEL versao=original P=1023 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.514761 intercala=0.001413 ocupacao=0.0027
+NIVEL versao=original P=1023 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.048258 conquista=0.000000 espera_filhos=0.416176 intercala=0.000685 ocupacao=0.0013
+NIVEL versao=original P=1023 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.087657 conquista=0.000000 espera_filhos=0.323908 intercala=0.000350 ocupacao=0.0007
+NIVEL versao=original P=1023 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.117100 conquista=0.000000 espera_filhos=0.257625 intercala=0.000184 ocupacao=0.0004
+NIVEL versao=original P=1023 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.136308 conquista=0.000000 espera_filhos=0.200402 intercala=0.000103 ocupacao=0.0002
+NIVEL versao=original P=1023 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.153437 conquista=0.000000 espera_filhos=0.155214 intercala=0.000057 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.170747 conquista=0.000000 espera_filhos=0.115464 intercala=0.000024 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.188101 conquista=0.000000 espera_filhos=0.078643 intercala=0.000011 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=8 procs=256 papel=interno tam=781 espera_pai=0.203319 conquista=0.000000 espera_filhos=0.042139 intercala=0.000005 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=9 procs=512 papel=folha tam=391 espera_pai=0.221355 conquista=0.000238 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0005
+---- repeticao 7
+RESULTADO versao=original P=63 n=200000 delta=6250 yield=1 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.203515 verificacao=OK
+NIVEL versao=original P=63 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.202583 intercala=0.000931 ocupacao=0.0046
+NIVEL versao=original P=63 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003438 conquista=0.000000 espera_filhos=0.191365 intercala=0.000528 ocupacao=0.0026
+NIVEL versao=original P=63 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.009438 conquista=0.000000 espera_filhos=0.175133 intercala=0.000284 ocupacao=0.0014
+NIVEL versao=original P=63 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.017617 conquista=0.000000 espera_filhos=0.151726 intercala=0.000147 ocupacao=0.0007
+NIVEL versao=original P=63 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.021958 conquista=0.000000 espera_filhos=0.136652 intercala=0.000077 ocupacao=0.0004
+NIVEL versao=original P=63 yield=1 nivel=5 procs=32 papel=folha tam=6250 espera_pai=0.031585 conquista=0.104260 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.5123
+RESULTADO versao=original P=127 n=200000 delta=3125 yield=1 folhas=64 menor_folha=3125 maior_folha=3125 tempo=0.157352 verificacao=OK
+NIVEL versao=original P=127 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.156297 intercala=0.001055 ocupacao=0.0067
+NIVEL versao=original P=127 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.010836 conquista=0.000000 espera_filhos=0.140561 intercala=0.000494 ocupacao=0.0031
+NIVEL versao=original P=127 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.016259 conquista=0.000000 espera_filhos=0.126753 intercala=0.000272 ocupacao=0.0017
+NIVEL versao=original P=127 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.023531 conquista=0.000000 espera_filhos=0.109491 intercala=0.000206 ocupacao=0.0013
+NIVEL versao=original P=127 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.031509 conquista=0.000000 espera_filhos=0.087557 intercala=0.000092 ocupacao=0.0006
+NIVEL versao=original P=127 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.042717 conquista=0.000000 espera_filhos=0.069726 intercala=0.000044 ocupacao=0.0003
+NIVEL versao=original P=127 yield=1 nivel=6 procs=64 papel=folha tam=3125 espera_pai=0.052392 conquista=0.044077 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.2801
+RESULTADO versao=original P=255 n=200000 delta=1563 yield=1 folhas=128 menor_folha=1562 maior_folha=1563 tempo=0.186166 verificacao=OK
+NIVEL versao=original P=255 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.184922 intercala=0.001243 ocupacao=0.0067
+NIVEL versao=original P=255 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.012348 conquista=0.000000 espera_filhos=0.164048 intercala=0.000564 ocupacao=0.0030
+NIVEL versao=original P=255 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.028720 conquista=0.000000 espera_filhos=0.139151 intercala=0.000586 ocupacao=0.0031
+NIVEL versao=original P=255 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.037667 conquista=0.000000 espera_filhos=0.120683 intercala=0.000320 ocupacao=0.0017
+NIVEL versao=original P=255 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.044892 conquista=0.000000 espera_filhos=0.094524 intercala=0.000236 ocupacao=0.0013
+NIVEL versao=original P=255 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.053805 conquista=0.000000 espera_filhos=0.068596 intercala=0.000111 ocupacao=0.0006
+NIVEL versao=original P=255 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.062774 conquista=0.000000 espera_filhos=0.044301 intercala=0.000031 ocupacao=0.0002
+NIVEL versao=original P=255 yield=1 nivel=7 procs=128 papel=folha tam=1562 espera_pai=0.074075 conquista=0.005095 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0274
+RESULTADO versao=original P=511 n=200000 delta=782 yield=1 folhas=256 menor_folha=781 maior_folha=782 tempo=0.251816 verificacao=OK
+NIVEL versao=original P=511 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.246424 intercala=0.005391 ocupacao=0.0214
+NIVEL versao=original P=511 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.013053 conquista=0.000000 espera_filhos=0.217709 intercala=0.000665 ocupacao=0.0026
+NIVEL versao=original P=511 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.029751 conquista=0.000000 espera_filhos=0.188163 intercala=0.000475 ocupacao=0.0019
+NIVEL versao=original P=511 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.045479 conquista=0.000000 espera_filhos=0.163200 intercala=0.000188 ocupacao=0.0007
+NIVEL versao=original P=511 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.058214 conquista=0.000000 espera_filhos=0.134891 intercala=0.000211 ocupacao=0.0008
+NIVEL versao=original P=511 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.071065 conquista=0.000000 espera_filhos=0.103391 intercala=0.000061 ocupacao=0.0002
+NIVEL versao=original P=511 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.082799 conquista=0.000000 espera_filhos=0.073029 intercala=0.000031 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.094620 conquista=0.000000 espera_filhos=0.041417 intercala=0.000015 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=8 procs=256 papel=folha tam=781 espera_pai=0.109404 conquista=0.000820 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0033
+RESULTADO versao=original P=1023 n=200000 delta=391 yield=1 folhas=512 menor_folha=390 maior_folha=391 tempo=0.527973 verificacao=OK
+NIVEL versao=original P=1023 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.526568 intercala=0.001405 ocupacao=0.0027
+NIVEL versao=original P=1023 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.034770 conquista=0.000000 espera_filhos=0.430981 intercala=0.000667 ocupacao=0.0013
+NIVEL versao=original P=1023 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.083104 conquista=0.000000 espera_filhos=0.323316 intercala=0.000347 ocupacao=0.0007
+NIVEL versao=original P=1023 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.114930 conquista=0.000000 espera_filhos=0.253823 intercala=0.000186 ocupacao=0.0004
+NIVEL versao=original P=1023 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.134301 conquista=0.000000 espera_filhos=0.198422 intercala=0.000099 ocupacao=0.0002
+NIVEL versao=original P=1023 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.152583 conquista=0.000000 espera_filhos=0.155899 intercala=0.000060 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.169739 conquista=0.000000 espera_filhos=0.116038 intercala=0.000027 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.186834 conquista=0.000000 espera_filhos=0.078560 intercala=0.000010 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=8 procs=256 papel=interno tam=781 espera_pai=0.203842 conquista=0.000000 espera_filhos=0.042146 intercala=0.000005 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=9 procs=512 papel=folha tam=391 espera_pai=0.220965 conquista=0.000245 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0005
+---- repeticao 8
+RESULTADO versao=original P=63 n=200000 delta=6250 yield=1 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.215000 verificacao=OK
+NIVEL versao=original P=63 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.214016 intercala=0.000983 ocupacao=0.0046
+NIVEL versao=original P=63 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002833 conquista=0.000000 espera_filhos=0.201373 intercala=0.000573 ocupacao=0.0027
+NIVEL versao=original P=63 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.009367 conquista=0.000000 espera_filhos=0.180116 intercala=0.000293 ocupacao=0.0014
+NIVEL versao=original P=63 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.012989 conquista=0.000000 espera_filhos=0.164782 intercala=0.000147 ocupacao=0.0007
+NIVEL versao=original P=63 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.018002 conquista=0.000000 espera_filhos=0.148022 intercala=0.000083 ocupacao=0.0004
+NIVEL versao=original P=63 yield=1 nivel=5 procs=32 papel=folha tam=6250 espera_pai=0.029091 conquista=0.110522 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.5141
+RESULTADO versao=original P=127 n=200000 delta=3125 yield=1 folhas=64 menor_folha=3125 maior_folha=3125 tempo=0.153403 verificacao=OK
+NIVEL versao=original P=127 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.152353 intercala=0.001050 ocupacao=0.0068
+NIVEL versao=original P=127 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.005393 conquista=0.000000 espera_filhos=0.137888 intercala=0.000505 ocupacao=0.0033
+NIVEL versao=original P=127 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.013763 conquista=0.000000 espera_filhos=0.119348 intercala=0.000265 ocupacao=0.0017
+NIVEL versao=original P=127 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.020204 conquista=0.000000 espera_filhos=0.105077 intercala=0.000155 ocupacao=0.0010
+NIVEL versao=original P=127 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.027965 conquista=0.000000 espera_filhos=0.083762 intercala=0.000079 ocupacao=0.0005
+NIVEL versao=original P=127 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.037003 conquista=0.000000 espera_filhos=0.064915 intercala=0.000043 ocupacao=0.0003
+NIVEL versao=original P=127 yield=1 nivel=6 procs=64 papel=folha tam=3125 espera_pai=0.045006 conquista=0.040097 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.2614
+RESULTADO versao=original P=255 n=200000 delta=1563 yield=1 folhas=128 menor_folha=1562 maior_folha=1563 tempo=0.186395 verificacao=OK
+NIVEL versao=original P=255 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.185190 intercala=0.001205 ocupacao=0.0065
+NIVEL versao=original P=255 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.008432 conquista=0.000000 espera_filhos=0.165710 intercala=0.000694 ocupacao=0.0037
+NIVEL versao=original P=255 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.017995 conquista=0.000000 espera_filhos=0.143711 intercala=0.000339 ocupacao=0.0018
+NIVEL versao=original P=255 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.025728 conquista=0.000000 espera_filhos=0.125646 intercala=0.000258 ocupacao=0.0014
+NIVEL versao=original P=255 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.034522 conquista=0.000000 espera_filhos=0.097298 intercala=0.000135 ocupacao=0.0007
+NIVEL versao=original P=255 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.044694 conquista=0.000000 espera_filhos=0.070166 intercala=0.000049 ocupacao=0.0003
+NIVEL versao=original P=255 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.055317 conquista=0.000000 espera_filhos=0.046128 intercala=0.000031 ocupacao=0.0002
+NIVEL versao=original P=255 yield=1 nivel=7 procs=128 papel=folha tam=1562 espera_pai=0.067000 conquista=0.004421 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0237
+RESULTADO versao=original P=511 n=200000 delta=782 yield=1 folhas=256 menor_folha=781 maior_folha=782 tempo=0.251079 verificacao=OK
+NIVEL versao=original P=511 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.249795 intercala=0.001283 ocupacao=0.0051
+NIVEL versao=original P=511 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.013124 conquista=0.000000 espera_filhos=0.222970 intercala=0.001182 ocupacao=0.0047
+NIVEL versao=original P=511 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.034567 conquista=0.000000 espera_filhos=0.190606 intercala=0.000565 ocupacao=0.0023
+NIVEL versao=original P=511 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.047250 conquista=0.000000 espera_filhos=0.162787 intercala=0.000239 ocupacao=0.0010
+NIVEL versao=original P=511 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.058483 conquista=0.000000 espera_filhos=0.135754 intercala=0.000128 ocupacao=0.0005
+NIVEL versao=original P=511 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.071280 conquista=0.000000 espera_filhos=0.103624 intercala=0.000055 ocupacao=0.0002
+NIVEL versao=original P=511 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.085719 conquista=0.000000 espera_filhos=0.073142 intercala=0.000030 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.097983 conquista=0.000000 espera_filhos=0.042153 intercala=0.000016 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=8 procs=256 papel=folha tam=781 espera_pai=0.110057 conquista=0.000884 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0035
+RESULTADO versao=original P=1023 n=200000 delta=391 yield=1 folhas=512 menor_folha=390 maior_folha=391 tempo=0.550426 verificacao=OK
+NIVEL versao=original P=1023 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.549097 intercala=0.001328 ocupacao=0.0024
+NIVEL versao=original P=1023 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.043005 conquista=0.000000 espera_filhos=0.422744 intercala=0.000650 ocupacao=0.0012
+NIVEL versao=original P=1023 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.096753 conquista=0.000000 espera_filhos=0.327434 intercala=0.000364 ocupacao=0.0007
+NIVEL versao=original P=1023 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.129878 conquista=0.000000 espera_filhos=0.255177 intercala=0.000189 ocupacao=0.0003
+NIVEL versao=original P=1023 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.150548 conquista=0.000000 espera_filhos=0.201631 intercala=0.000096 ocupacao=0.0002
+NIVEL versao=original P=1023 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.165197 conquista=0.000000 espera_filhos=0.154574 intercala=0.000058 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.181549 conquista=0.000000 espera_filhos=0.113497 intercala=0.000028 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.197957 conquista=0.000000 espera_filhos=0.077156 intercala=0.000010 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=8 procs=256 papel=interno tam=781 espera_pai=0.214412 conquista=0.000000 espera_filhos=0.041602 intercala=0.000005 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=9 procs=512 papel=folha tam=391 espera_pai=0.231824 conquista=0.000210 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0004
+---- repeticao 9
+RESULTADO versao=original P=63 n=200000 delta=6250 yield=1 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.207630 verificacao=OK
+NIVEL versao=original P=63 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.206654 intercala=0.000975 ocupacao=0.0047
+NIVEL versao=original P=63 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003128 conquista=0.000000 espera_filhos=0.194324 intercala=0.000509 ocupacao=0.0025
+NIVEL versao=original P=63 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.007682 conquista=0.000000 espera_filhos=0.178794 intercala=0.000293 ocupacao=0.0014
+NIVEL versao=original P=63 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.013748 conquista=0.000000 espera_filhos=0.159655 intercala=0.000144 ocupacao=0.0007
+NIVEL versao=original P=63 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.021386 conquista=0.000000 espera_filhos=0.132709 intercala=0.000079 ocupacao=0.0004
+NIVEL versao=original P=63 yield=1 nivel=5 procs=32 papel=folha tam=6250 espera_pai=0.031168 conquista=0.105844 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.5098
+RESULTADO versao=original P=127 n=200000 delta=3125 yield=1 folhas=64 menor_folha=3125 maior_folha=3125 tempo=0.164894 verificacao=OK
+NIVEL versao=original P=127 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.163887 intercala=0.001006 ocupacao=0.0061
+NIVEL versao=original P=127 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.008655 conquista=0.000000 espera_filhos=0.140155 intercala=0.000501 ocupacao=0.0030
+NIVEL versao=original P=127 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.012128 conquista=0.000000 espera_filhos=0.126175 intercala=0.000357 ocupacao=0.0022
+NIVEL versao=original P=127 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.019266 conquista=0.000000 espera_filhos=0.111760 intercala=0.000182 ocupacao=0.0011
+NIVEL versao=original P=127 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.030993 conquista=0.000000 espera_filhos=0.089053 intercala=0.000089 ocupacao=0.0005
+NIVEL versao=original P=127 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.037340 conquista=0.000000 espera_filhos=0.066103 intercala=0.000045 ocupacao=0.0003
+NIVEL versao=original P=127 yield=1 nivel=6 procs=64 papel=folha tam=3125 espera_pai=0.046227 conquista=0.043903 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.2663
+RESULTADO versao=original P=255 n=200000 delta=1563 yield=1 folhas=128 menor_folha=1562 maior_folha=1563 tempo=0.188188 verificacao=OK
+NIVEL versao=original P=255 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.186964 intercala=0.001224 ocupacao=0.0065
+NIVEL versao=original P=255 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.014258 conquista=0.000000 espera_filhos=0.165386 intercala=0.000601 ocupacao=0.0032
+NIVEL versao=original P=255 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.022519 conquista=0.000000 espera_filhos=0.144392 intercala=0.000316 ocupacao=0.0017
+NIVEL versao=original P=255 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.033249 conquista=0.000000 espera_filhos=0.122858 intercala=0.000203 ocupacao=0.0011
+NIVEL versao=original P=255 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.042188 conquista=0.000000 espera_filhos=0.096856 intercala=0.000145 ocupacao=0.0008
+NIVEL versao=original P=255 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.051778 conquista=0.000000 espera_filhos=0.071357 intercala=0.000051 ocupacao=0.0003
+NIVEL versao=original P=255 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.062142 conquista=0.000000 espera_filhos=0.047424 intercala=0.000025 ocupacao=0.0001
+NIVEL versao=original P=255 yield=1 nivel=7 procs=128 papel=folha tam=1562 espera_pai=0.073400 conquista=0.005407 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0287
+RESULTADO versao=original P=511 n=200000 delta=782 yield=1 folhas=256 menor_folha=781 maior_folha=782 tempo=0.253679 verificacao=OK
+NIVEL versao=original P=511 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.250888 intercala=0.002790 ocupacao=0.0110
+NIVEL versao=original P=511 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.013268 conquista=0.000000 espera_filhos=0.223252 intercala=0.000645 ocupacao=0.0025
+NIVEL versao=original P=511 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.033899 conquista=0.000000 espera_filhos=0.191164 intercala=0.000335 ocupacao=0.0013
+NIVEL versao=original P=511 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.047049 conquista=0.000000 espera_filhos=0.164785 intercala=0.000230 ocupacao=0.0009
+NIVEL versao=original P=511 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.060746 conquista=0.000000 espera_filhos=0.135073 intercala=0.000101 ocupacao=0.0004
+NIVEL versao=original P=511 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.072999 conquista=0.000000 espera_filhos=0.104019 intercala=0.000054 ocupacao=0.0002
+NIVEL versao=original P=511 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.085587 conquista=0.000000 espera_filhos=0.073124 intercala=0.000029 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.096729 conquista=0.000000 espera_filhos=0.042466 intercala=0.000017 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=8 procs=256 papel=folha tam=781 espera_pai=0.112823 conquista=0.000928 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0037
+RESULTADO versao=original P=1023 n=200000 delta=391 yield=1 folhas=512 menor_folha=390 maior_folha=391 tempo=0.559927 verificacao=OK
+NIVEL versao=original P=1023 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.558508 intercala=0.001418 ocupacao=0.0025
+NIVEL versao=original P=1023 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.051072 conquista=0.000000 espera_filhos=0.433564 intercala=0.000657 ocupacao=0.0012
+NIVEL versao=original P=1023 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.099352 conquista=0.000000 espera_filhos=0.324499 intercala=0.000354 ocupacao=0.0006
+NIVEL versao=original P=1023 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.135170 conquista=0.000000 espera_filhos=0.255121 intercala=0.000193 ocupacao=0.0003
+NIVEL versao=original P=1023 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.151277 conquista=0.000000 espera_filhos=0.203660 intercala=0.000107 ocupacao=0.0002
+NIVEL versao=original P=1023 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.175389 conquista=0.000000 espera_filhos=0.156911 intercala=0.000060 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.189179 conquista=0.000000 espera_filhos=0.115246 intercala=0.000027 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.205096 conquista=0.000000 espera_filhos=0.078100 intercala=0.000009 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=8 procs=256 papel=interno tam=781 espera_pai=0.220399 conquista=0.000000 espera_filhos=0.041502 intercala=0.000005 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=9 procs=512 papel=folha tam=391 espera_pai=0.239140 conquista=0.000204 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0004
+---- repeticao 10
+RESULTADO versao=original P=63 n=200000 delta=6250 yield=1 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.222260 verificacao=OK
+NIVEL versao=original P=63 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.221319 intercala=0.000940 ocupacao=0.0042
+NIVEL versao=original P=63 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003573 conquista=0.000000 espera_filhos=0.207592 intercala=0.000508 ocupacao=0.0023
+NIVEL versao=original P=63 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006937 conquista=0.000000 espera_filhos=0.184295 intercala=0.000269 ocupacao=0.0012
+NIVEL versao=original P=63 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.010834 conquista=0.000000 espera_filhos=0.166873 intercala=0.000144 ocupacao=0.0006
+NIVEL versao=original P=63 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.020773 conquista=0.000000 espera_filhos=0.138397 intercala=0.000076 ocupacao=0.0003
+NIVEL versao=original P=63 yield=1 nivel=5 procs=32 papel=folha tam=6250 espera_pai=0.032476 conquista=0.101618 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.4572
+RESULTADO versao=original P=127 n=200000 delta=3125 yield=1 folhas=64 menor_folha=3125 maior_folha=3125 tempo=0.166773 verificacao=OK
+NIVEL versao=original P=127 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.165729 intercala=0.001043 ocupacao=0.0063
+NIVEL versao=original P=127 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.007801 conquista=0.000000 espera_filhos=0.146734 intercala=0.000550 ocupacao=0.0033
+NIVEL versao=original P=127 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.017342 conquista=0.000000 espera_filhos=0.125027 intercala=0.000292 ocupacao=0.0017
+NIVEL versao=original P=127 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.027325 conquista=0.000000 espera_filhos=0.106899 intercala=0.000208 ocupacao=0.0013
+NIVEL versao=original P=127 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.034153 conquista=0.000000 espera_filhos=0.088782 intercala=0.000101 ocupacao=0.0006
+NIVEL versao=original P=127 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.041977 conquista=0.000000 espera_filhos=0.070314 intercala=0.000043 ocupacao=0.0003
+NIVEL versao=original P=127 yield=1 nivel=6 procs=64 papel=folha tam=3125 espera_pai=0.048810 conquista=0.046161 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.2768
+RESULTADO versao=original P=255 n=200000 delta=1563 yield=1 folhas=128 menor_folha=1562 maior_folha=1563 tempo=0.185817 verificacao=OK
+NIVEL versao=original P=255 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.184559 intercala=0.001258 ocupacao=0.0068
+NIVEL versao=original P=255 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.010983 conquista=0.000000 espera_filhos=0.162964 intercala=0.000624 ocupacao=0.0034
+NIVEL versao=original P=255 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.020107 conquista=0.000000 espera_filhos=0.144268 intercala=0.000417 ocupacao=0.0022
+NIVEL versao=original P=255 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.027730 conquista=0.000000 espera_filhos=0.124770 intercala=0.000240 ocupacao=0.0013
+NIVEL versao=original P=255 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.035685 conquista=0.000000 espera_filhos=0.095333 intercala=0.000124 ocupacao=0.0007
+NIVEL versao=original P=255 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.046239 conquista=0.000000 espera_filhos=0.071087 intercala=0.000059 ocupacao=0.0003
+NIVEL versao=original P=255 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.055388 conquista=0.000000 espera_filhos=0.046429 intercala=0.000030 ocupacao=0.0002
+NIVEL versao=original P=255 yield=1 nivel=7 procs=128 papel=folha tam=1562 espera_pai=0.066231 conquista=0.005432 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0292
+RESULTADO versao=original P=511 n=200000 delta=782 yield=1 folhas=256 menor_folha=781 maior_folha=782 tempo=0.247525 verificacao=OK
+NIVEL versao=original P=511 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.246273 intercala=0.001250 ocupacao=0.0051
+NIVEL versao=original P=511 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.013905 conquista=0.000000 espera_filhos=0.221998 intercala=0.000798 ocupacao=0.0032
+NIVEL versao=original P=511 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.035482 conquista=0.000000 espera_filhos=0.188923 intercala=0.000353 ocupacao=0.0014
+NIVEL versao=original P=511 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.047357 conquista=0.000000 espera_filhos=0.164168 intercala=0.000188 ocupacao=0.0008
+NIVEL versao=original P=511 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.059873 conquista=0.000000 espera_filhos=0.135999 intercala=0.000106 ocupacao=0.0004
+NIVEL versao=original P=511 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.072461 conquista=0.000000 espera_filhos=0.105178 intercala=0.000056 ocupacao=0.0002
+NIVEL versao=original P=511 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.085965 conquista=0.000000 espera_filhos=0.073950 intercala=0.000029 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.099268 conquista=0.000000 espera_filhos=0.042596 intercala=0.000017 ocupacao=0.0001
+NIVEL versao=original P=511 yield=1 nivel=8 procs=256 papel=folha tam=781 espera_pai=0.111734 conquista=0.000917 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0037
+RESULTADO versao=original P=1023 n=200000 delta=391 yield=1 folhas=512 menor_folha=390 maior_folha=391 tempo=0.507543 verificacao=OK
+NIVEL versao=original P=1023 yield=1 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.506148 intercala=0.001395 ocupacao=0.0027
+NIVEL versao=original P=1023 yield=1 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.033508 conquista=0.000000 espera_filhos=0.420821 intercala=0.000655 ocupacao=0.0013
+NIVEL versao=original P=1023 yield=1 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.082396 conquista=0.000000 espera_filhos=0.319295 intercala=0.000354 ocupacao=0.0007
+NIVEL versao=original P=1023 yield=1 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.119328 conquista=0.000000 espera_filhos=0.255376 intercala=0.000184 ocupacao=0.0004
+NIVEL versao=original P=1023 yield=1 nivel=4 procs=16 papel=interno tam=12500 espera_pai=0.138039 conquista=0.000000 espera_filhos=0.196651 intercala=0.000094 ocupacao=0.0002
+NIVEL versao=original P=1023 yield=1 nivel=5 procs=32 papel=interno tam=6250 espera_pai=0.154427 conquista=0.000000 espera_filhos=0.154158 intercala=0.000053 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=6 procs=64 papel=interno tam=3125 espera_pai=0.169027 conquista=0.000000 espera_filhos=0.115321 intercala=0.000026 ocupacao=0.0001
+NIVEL versao=original P=1023 yield=1 nivel=7 procs=128 papel=interno tam=1562 espera_pai=0.185094 conquista=0.000000 espera_filhos=0.078860 intercala=0.000009 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=8 procs=256 papel=interno tam=781 espera_pai=0.201011 conquista=0.000000 espera_filhos=0.042140 intercala=0.000005 ocupacao=0.0000
+NIVEL versao=original P=1023 yield=1 nivel=9 procs=512 papel=folha tam=391 espera_pai=0.219959 conquista=0.000208 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.0004

@@ -1,0 +1,136 @@
+==== job 45845 (t3-balanceada-isend) em 2026-11-18 20:18:05
+nos: atlantica[05-06]   N=200000   REPS=10
+---- lscpu (nó atlantica05)
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   40 bits physical, 48 bits virtual
+CPU(s):                          16
+On-line CPU(s) list:             0-15
+Thread(s) per core:              2
+Core(s) per socket:              4
+Socket(s):                       2
+NUMA node(s):                    2
+Vendor ID:                       GenuineIntel
+CPU family:                      6
+Model:                           26
+Model name:                      Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+Stepping:                        5
+CPU MHz:                         1623.619
+BogoMIPS:                        4522.06
+Virtualization:                  VT-x
+L1d cache:                       256 KiB
+L1i cache:                       256 KiB
+L2 cache:                        2 MiB
+L3 cache:                        16 MiB
+NUMA node0 CPU(s):               0,2,4,6,8,10,12,14
+NUMA node1 CPU(s):               1,3,5,7,9,11,13,15
+Vulnerability Itlb multihit:     KVM: Mitigation: Split huge pages
+Vulnerability L1tf:              Mitigation; PTE Inversion; VMX conditional cache flushes, SMT vulnerable
+Vulnerability Mds:               Vulnerable: Clear CPU buffers attempted, no microcode; SMT vulnerable
+Vulnerability Meltdown:          Mitigation; PTI
+Vulnerability Mmio stale data:   Unknown: No mitigations
+Vulnerability Retbleed:          Not affected
+Vulnerability Spec store bypass: Mitigation; Speculative Store Bypass disabled via prctl and seccomp
+Vulnerability Spectre v1:        Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:        Mitigation; Retpolines, IBPB conditional, IBRS_FW, STIBP conditional, RSB filling, PBRSB-eIBRS Not affected
+Vulnerability Srbds:             Not affected
+Vulnerability Tsx async abort:   Not affected
+Flags:                           fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid dtherm ida flush_l1d
+---- como o Slurm conta as CPUs deste nó (os scripts supõem CPUTot=16)
+CoresPerSocket=4 CPUTot=16 Sockets=2 ThreadsPerCore=2 
+---- Open MPI
+mpirun (Open MPI) 4.1.1
+
+            MCA mpi base: parameter "mpi_yield_when_idle" (current value: "false", data source: environment, level: 5 tuner/detail, type: bool)
+                          Yield the processor when waiting for MPI communication (for MPI processes, will default to 1 when oversubscribing nodes)
+---- variáveis OMPI no ambiente
+OMPI_MCA_mpi_yield_when_idle=0
+====
+DISTRIBUICAO P=2 (srun -N 2 -n 2 -c 2 --distribution=cyclic --cpu-bind=none ):       1 atlantica05       1 atlantica06 
+DISTRIBUICAO P=4 (srun -N 2 -n 4 -c 2 --distribution=cyclic --cpu-bind=none ):       2 atlantica05       2 atlantica06 
+DISTRIBUICAO P=8 (srun -N 2 -n 8 -c 2 --distribution=cyclic --cpu-bind=none ):       4 atlantica05       4 atlantica06 
+DISTRIBUICAO P=16 (srun -N 2 -n 16 -c 2 --distribution=cyclic --cpu-bind=none ):       8 atlantica05       8 atlantica06 
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+DISTRIBUICAO P=31 (srun -N 2 -n 31 -c 1 --distribution=cyclic --cpu-bind=none ):      16 atlantica05      15 atlantica06 
+DISTRIBUICAO P=32 (srun -N 2 -n 32 -c 1 --distribution=cyclic --cpu-bind=none ):      16 atlantica05      16 atlantica06 
+---- repeticao 1
+RESULTADO versao=balanceada_isend P=2 n=200000 delta=- yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=20.061065 verificacao=OK
+RESULTADO versao=balanceada_isend P=4 n=200000 delta=- yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=4.969172 verificacao=OK
+RESULTADO versao=balanceada_isend P=8 n=200000 delta=- yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=1.244458 verificacao=OK
+RESULTADO versao=balanceada_isend P=16 n=200000 delta=- yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.332312 verificacao=OK
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=balanceada_isend P=31 n=200000 delta=- yield=0 folhas=31 menor_folha=6250 maior_folha=12500 tempo=0.266563 verificacao=OK
+RESULTADO versao=balanceada_isend P=32 n=200000 delta=- yield=0 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.145506 verificacao=OK
+---- repeticao 2
+RESULTADO versao=balanceada_isend P=2 n=200000 delta=- yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=20.045376 verificacao=OK
+RESULTADO versao=balanceada_isend P=4 n=200000 delta=- yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=4.978493 verificacao=OK
+RESULTADO versao=balanceada_isend P=8 n=200000 delta=- yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=1.267231 verificacao=OK
+RESULTADO versao=balanceada_isend P=16 n=200000 delta=- yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.366768 verificacao=OK
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=balanceada_isend P=31 n=200000 delta=- yield=0 folhas=31 menor_folha=6250 maior_folha=12500 tempo=0.266904 verificacao=OK
+RESULTADO versao=balanceada_isend P=32 n=200000 delta=- yield=0 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.145611 verificacao=OK
+---- repeticao 3
+RESULTADO versao=balanceada_isend P=2 n=200000 delta=- yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=20.036002 verificacao=OK
+RESULTADO versao=balanceada_isend P=4 n=200000 delta=- yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=4.974239 verificacao=OK
+RESULTADO versao=balanceada_isend P=8 n=200000 delta=- yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=1.257388 verificacao=OK
+RESULTADO versao=balanceada_isend P=16 n=200000 delta=- yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.337668 verificacao=OK
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=balanceada_isend P=31 n=200000 delta=- yield=0 folhas=31 menor_folha=6250 maior_folha=12500 tempo=0.268422 verificacao=OK
+RESULTADO versao=balanceada_isend P=32 n=200000 delta=- yield=0 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.146106 verificacao=OK
+---- repeticao 4
+RESULTADO versao=balanceada_isend P=2 n=200000 delta=- yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=20.097517 verificacao=OK
+RESULTADO versao=balanceada_isend P=4 n=200000 delta=- yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=4.992892 verificacao=OK
+RESULTADO versao=balanceada_isend P=8 n=200000 delta=- yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=1.249919 verificacao=OK
+RESULTADO versao=balanceada_isend P=16 n=200000 delta=- yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.333730 verificacao=OK
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=balanceada_isend P=31 n=200000 delta=- yield=0 folhas=31 menor_folha=6250 maior_folha=12500 tempo=0.264417 verificacao=OK
+RESULTADO versao=balanceada_isend P=32 n=200000 delta=- yield=0 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.145544 verificacao=OK
+---- repeticao 5
+RESULTADO versao=balanceada_isend P=2 n=200000 delta=- yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=20.060214 verificacao=OK
+RESULTADO versao=balanceada_isend P=4 n=200000 delta=- yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=4.995387 verificacao=OK
+RESULTADO versao=balanceada_isend P=8 n=200000 delta=- yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=1.247846 verificacao=OK
+RESULTADO versao=balanceada_isend P=16 n=200000 delta=- yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.333311 verificacao=OK
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=balanceada_isend P=31 n=200000 delta=- yield=0 folhas=31 menor_folha=6250 maior_folha=12500 tempo=0.264731 verificacao=OK
+RESULTADO versao=balanceada_isend P=32 n=200000 delta=- yield=0 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.145570 verificacao=OK
+---- repeticao 6
+RESULTADO versao=balanceada_isend P=2 n=200000 delta=- yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=20.041663 verificacao=OK
+RESULTADO versao=balanceada_isend P=4 n=200000 delta=- yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=5.018230 verificacao=OK
+RESULTADO versao=balanceada_isend P=8 n=200000 delta=- yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=1.258554 verificacao=OK
+RESULTADO versao=balanceada_isend P=16 n=200000 delta=- yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.330613 verificacao=OK
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=balanceada_isend P=31 n=200000 delta=- yield=0 folhas=31 menor_folha=6250 maior_folha=12500 tempo=0.271987 verificacao=OK
+RESULTADO versao=balanceada_isend P=32 n=200000 delta=- yield=0 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.145647 verificacao=OK
+---- repeticao 7
+RESULTADO versao=balanceada_isend P=2 n=200000 delta=- yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=20.049587 verificacao=OK
+RESULTADO versao=balanceada_isend P=4 n=200000 delta=- yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=4.975429 verificacao=OK
+RESULTADO versao=balanceada_isend P=8 n=200000 delta=- yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=1.268237 verificacao=OK
+RESULTADO versao=balanceada_isend P=16 n=200000 delta=- yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.330750 verificacao=OK
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=balanceada_isend P=31 n=200000 delta=- yield=0 folhas=31 menor_folha=6250 maior_folha=12500 tempo=0.275891 verificacao=OK
+RESULTADO versao=balanceada_isend P=32 n=200000 delta=- yield=0 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.145266 verificacao=OK
+---- repeticao 8
+RESULTADO versao=balanceada_isend P=2 n=200000 delta=- yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=20.018482 verificacao=OK
+RESULTADO versao=balanceada_isend P=4 n=200000 delta=- yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=4.974049 verificacao=OK
+RESULTADO versao=balanceada_isend P=8 n=200000 delta=- yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=1.251159 verificacao=OK
+RESULTADO versao=balanceada_isend P=16 n=200000 delta=- yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.341392 verificacao=OK
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=balanceada_isend P=31 n=200000 delta=- yield=0 folhas=31 menor_folha=6250 maior_folha=12500 tempo=0.240734 verificacao=OK
+RESULTADO versao=balanceada_isend P=32 n=200000 delta=- yield=0 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.145388 verificacao=OK
+---- repeticao 9
+RESULTADO versao=balanceada_isend P=2 n=200000 delta=- yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=20.061211 verificacao=OK
+RESULTADO versao=balanceada_isend P=4 n=200000 delta=- yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=4.973948 verificacao=OK
+RESULTADO versao=balanceada_isend P=8 n=200000 delta=- yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=1.248990 verificacao=OK
+RESULTADO versao=balanceada_isend P=16 n=200000 delta=- yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.333473 verificacao=OK
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=balanceada_isend P=31 n=200000 delta=- yield=0 folhas=31 menor_folha=6250 maior_folha=12500 tempo=0.274020 verificacao=OK
+RESULTADO versao=balanceada_isend P=32 n=200000 delta=- yield=0 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.126343 verificacao=OK
+---- repeticao 10
+RESULTADO versao=balanceada_isend P=2 n=200000 delta=- yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=20.049809 verificacao=OK
+RESULTADO versao=balanceada_isend P=4 n=200000 delta=- yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=4.969462 verificacao=OK
+RESULTADO versao=balanceada_isend P=8 n=200000 delta=- yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=1.270981 verificacao=OK
+RESULTADO versao=balanceada_isend P=16 n=200000 delta=- yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.378865 verificacao=OK
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=balanceada_isend P=31 n=200000 delta=- yield=0 folhas=31 menor_folha=6250 maior_folha=12500 tempo=0.238642 verificacao=OK
+RESULTADO versao=balanceada_isend P=32 n=200000 delta=- yield=0 folhas=32 menor_folha=6250 maior_folha=6250 tempo=0.145392 verificacao=OK

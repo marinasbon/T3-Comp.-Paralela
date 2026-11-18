@@ -1,0 +1,275 @@
+==== job 45842 (t3-original) em 2026-11-18 20:06:12
+nos: atlantica[05-06]   N=200000   REPS=10
+---- lscpu (nó atlantica05)
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   40 bits physical, 48 bits virtual
+CPU(s):                          16
+On-line CPU(s) list:             0-15
+Thread(s) per core:              2
+Core(s) per socket:              4
+Socket(s):                       2
+NUMA node(s):                    2
+Vendor ID:                       GenuineIntel
+CPU family:                      6
+Model:                           26
+Model name:                      Intel(R) Xeon(R) CPU           E5520  @ 2.27GHz
+Stepping:                        5
+CPU MHz:                         1718.065
+BogoMIPS:                        4522.06
+Virtualization:                  VT-x
+L1d cache:                       256 KiB
+L1i cache:                       256 KiB
+L2 cache:                        2 MiB
+L3 cache:                        16 MiB
+NUMA node0 CPU(s):               0,2,4,6,8,10,12,14
+NUMA node1 CPU(s):               1,3,5,7,9,11,13,15
+Vulnerability Itlb multihit:     KVM: Mitigation: Split huge pages
+Vulnerability L1tf:              Mitigation; PTE Inversion; VMX conditional cache flushes, SMT vulnerable
+Vulnerability Mds:               Vulnerable: Clear CPU buffers attempted, no microcode; SMT vulnerable
+Vulnerability Meltdown:          Mitigation; PTI
+Vulnerability Mmio stale data:   Unknown: No mitigations
+Vulnerability Retbleed:          Not affected
+Vulnerability Spec store bypass: Mitigation; Speculative Store Bypass disabled via prctl and seccomp
+Vulnerability Spectre v1:        Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:        Mitigation; Retpolines, IBPB conditional, IBRS_FW, STIBP conditional, RSB filling, PBRSB-eIBRS Not affected
+Vulnerability Srbds:             Not affected
+Vulnerability Tsx async abort:   Not affected
+Flags:                           fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 popcnt lahf_lm pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid dtherm ida flush_l1d
+---- como o Slurm conta as CPUs deste nó (os scripts supõem CPUTot=16)
+CoresPerSocket=4 CPUTot=16 Sockets=2 ThreadsPerCore=2 
+---- Open MPI
+mpirun (Open MPI) 4.1.1
+
+            MCA mpi base: parameter "mpi_yield_when_idle" (current value: "false", data source: environment, level: 5 tuner/detail, type: bool)
+                          Yield the processor when waiting for MPI communication (for MPI processes, will default to 1 when oversubscribing nodes)
+---- variáveis OMPI no ambiente
+OMPI_MCA_mpi_yield_when_idle=0
+====
+DISTRIBUICAO P=1 (srun -N 1 -n 1 -c 2 --distribution=cyclic --cpu-bind=none ):       1 atlantica06 
+DISTRIBUICAO P=3 (srun -N 2 -n 3 -c 2 --distribution=cyclic --cpu-bind=none ):       2 atlantica05       1 atlantica06 
+DISTRIBUICAO P=7 (srun -N 2 -n 7 -c 2 --distribution=cyclic --cpu-bind=none ):       4 atlantica05       3 atlantica06 
+DISTRIBUICAO P=15 (srun -N 2 -n 15 -c 2 --distribution=cyclic --cpu-bind=none ):       8 atlantica05       7 atlantica06 
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+DISTRIBUICAO P=31 (srun -N 2 -n 31 -c 1 --distribution=cyclic --cpu-bind=none ):      16 atlantica05      15 atlantica06 
+---- repeticao 1
+RESULTADO versao=original P=1 n=200000 delta=200000 yield=0 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.274450 verificacao=OK
+NIVEL versao=original P=1 yield=0 nivel=0 procs=1 papel=folha tam=200000 espera_pai=0.000000 conquista=40.274449 espera_filhos=0.000000 intercala=0.000000 ocupacao=1.0000
+RESULTADO versao=original P=3 n=200000 delta=100000 yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=10.056108 verificacao=OK
+NIVEL versao=original P=3 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=10.055262 intercala=0.000846 ocupacao=0.0001
+NIVEL versao=original P=3 yield=0 nivel=1 procs=2 papel=folha tam=100000 espera_pai=0.002347 conquista=10.020560 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9965
+RESULTADO versao=original P=7 n=200000 delta=50000 yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=2.531734 verificacao=OK
+NIVEL versao=original P=7 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=2.530887 intercala=0.000847 ocupacao=0.0003
+NIVEL versao=original P=7 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003102 conquista=0.000000 espera_filhos=2.518262 intercala=0.000411 ocupacao=0.0002
+NIVEL versao=original P=7 yield=0 nivel=2 procs=4 papel=folha tam=50000 espera_pai=0.009014 conquista=2.501352 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9880
+RESULTADO versao=original P=15 n=200000 delta=25000 yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=0.689069 verificacao=OK
+NIVEL versao=original P=15 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.688195 intercala=0.000874 ocupacao=0.0013
+NIVEL versao=original P=15 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002476 conquista=0.000000 espera_filhos=0.672276 intercala=0.000429 ocupacao=0.0006
+NIVEL versao=original P=15 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006124 conquista=0.000000 espera_filhos=0.661414 intercala=0.000215 ocupacao=0.0003
+NIVEL versao=original P=15 yield=0 nivel=3 procs=8 papel=folha tam=25000 espera_pai=0.012151 conquista=0.648688 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9414
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=original P=31 n=200000 delta=12500 yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.302787 verificacao=OK
+NIVEL versao=original P=31 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.301827 intercala=0.000960 ocupacao=0.0032
+NIVEL versao=original P=31 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002288 conquista=0.000000 espera_filhos=0.287200 intercala=0.000451 ocupacao=0.0015
+NIVEL versao=original P=31 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006307 conquista=0.000000 espera_filhos=0.263514 intercala=0.000243 ocupacao=0.0008
+NIVEL versao=original P=31 yield=0 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.008926 conquista=0.000000 espera_filhos=0.237881 intercala=0.000150 ocupacao=0.0005
+NIVEL versao=original P=31 yield=0 nivel=4 procs=16 papel=folha tam=12500 espera_pai=0.017129 conquista=0.205381 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.6783
+---- repeticao 2
+RESULTADO versao=original P=1 n=200000 delta=200000 yield=0 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.279747 verificacao=OK
+NIVEL versao=original P=1 yield=0 nivel=0 procs=1 papel=folha tam=200000 espera_pai=0.000000 conquista=40.279741 espera_filhos=0.000000 intercala=0.000000 ocupacao=1.0000
+RESULTADO versao=original P=3 n=200000 delta=100000 yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=10.013938 verificacao=OK
+NIVEL versao=original P=3 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=10.013036 intercala=0.000901 ocupacao=0.0001
+NIVEL versao=original P=3 yield=0 nivel=1 procs=2 papel=folha tam=100000 espera_pai=0.002799 conquista=9.998528 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9985
+RESULTADO versao=original P=7 n=200000 delta=50000 yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=2.535056 verificacao=OK
+NIVEL versao=original P=7 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=2.534216 intercala=0.000840 ocupacao=0.0003
+NIVEL versao=original P=7 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003424 conquista=0.000000 espera_filhos=2.515867 intercala=0.000419 ocupacao=0.0002
+NIVEL versao=original P=7 yield=0 nivel=2 procs=4 papel=folha tam=50000 espera_pai=0.009193 conquista=2.499847 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9861
+RESULTADO versao=original P=15 n=200000 delta=25000 yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=0.719361 verificacao=OK
+NIVEL versao=original P=15 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.717701 intercala=0.001659 ocupacao=0.0023
+NIVEL versao=original P=15 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002292 conquista=0.000000 espera_filhos=0.687303 intercala=0.000415 ocupacao=0.0006
+NIVEL versao=original P=15 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.005784 conquista=0.000000 espera_filhos=0.671088 intercala=0.000209 ocupacao=0.0003
+NIVEL versao=original P=15 yield=0 nivel=3 procs=8 papel=folha tam=25000 espera_pai=0.012211 conquista=0.653926 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9090
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=original P=31 n=200000 delta=12500 yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.396309 verificacao=OK
+NIVEL versao=original P=31 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.395340 intercala=0.000969 ocupacao=0.0024
+NIVEL versao=original P=31 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002363 conquista=0.000000 espera_filhos=0.340576 intercala=0.000832 ocupacao=0.0021
+NIVEL versao=original P=31 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006372 conquista=0.000000 espera_filhos=0.301738 intercala=0.000254 ocupacao=0.0006
+NIVEL versao=original P=31 yield=0 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.009209 conquista=0.000000 espera_filhos=0.250755 intercala=0.000134 ocupacao=0.0003
+NIVEL versao=original P=31 yield=0 nivel=4 procs=16 papel=folha tam=12500 espera_pai=0.018137 conquista=0.209339 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.5282
+---- repeticao 3
+RESULTADO versao=original P=1 n=200000 delta=200000 yield=0 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.269721 verificacao=OK
+NIVEL versao=original P=1 yield=0 nivel=0 procs=1 papel=folha tam=200000 espera_pai=0.000000 conquista=40.269720 espera_filhos=0.000000 intercala=0.000000 ocupacao=1.0000
+RESULTADO versao=original P=3 n=200000 delta=100000 yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=10.023148 verificacao=OK
+NIVEL versao=original P=3 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=10.022288 intercala=0.000859 ocupacao=0.0001
+NIVEL versao=original P=3 yield=0 nivel=1 procs=2 papel=folha tam=100000 espera_pai=0.002398 conquista=10.005501 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9982
+RESULTADO versao=original P=7 n=200000 delta=50000 yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=2.551884 verificacao=OK
+NIVEL versao=original P=7 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=2.551009 intercala=0.000874 ocupacao=0.0003
+NIVEL versao=original P=7 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003202 conquista=0.000000 espera_filhos=2.539969 intercala=0.000459 ocupacao=0.0002
+NIVEL versao=original P=7 yield=0 nivel=2 procs=4 papel=folha tam=50000 espera_pai=0.009551 conquista=2.510083 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9836
+RESULTADO versao=original P=15 n=200000 delta=25000 yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=0.688270 verificacao=OK
+NIVEL versao=original P=15 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.687330 intercala=0.000940 ocupacao=0.0014
+NIVEL versao=original P=15 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002379 conquista=0.000000 espera_filhos=0.675737 intercala=0.000441 ocupacao=0.0006
+NIVEL versao=original P=15 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.005801 conquista=0.000000 espera_filhos=0.663766 intercala=0.000221 ocupacao=0.0003
+NIVEL versao=original P=15 yield=0 nivel=3 procs=8 papel=folha tam=25000 espera_pai=0.012239 conquista=0.652260 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9477
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=original P=31 n=200000 delta=12500 yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.339764 verificacao=OK
+NIVEL versao=original P=31 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.338848 intercala=0.000915 ocupacao=0.0027
+NIVEL versao=original P=31 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002370 conquista=0.000000 espera_filhos=0.307301 intercala=0.000510 ocupacao=0.0015
+NIVEL versao=original P=31 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006392 conquista=0.000000 espera_filhos=0.274392 intercala=0.000241 ocupacao=0.0007
+NIVEL versao=original P=31 yield=0 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.007652 conquista=0.000000 espera_filhos=0.261726 intercala=0.000131 ocupacao=0.0004
+NIVEL versao=original P=31 yield=0 nivel=4 procs=16 papel=folha tam=12500 espera_pai=0.016862 conquista=0.225332 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.6632
+---- repeticao 4
+RESULTADO versao=original P=1 n=200000 delta=200000 yield=0 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.309717 verificacao=OK
+NIVEL versao=original P=1 yield=0 nivel=0 procs=1 papel=folha tam=200000 espera_pai=0.000000 conquista=40.309711 espera_filhos=0.000000 intercala=0.000000 ocupacao=1.0000
+RESULTADO versao=original P=3 n=200000 delta=100000 yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=10.027789 verificacao=OK
+NIVEL versao=original P=3 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=10.026959 intercala=0.000830 ocupacao=0.0001
+NIVEL versao=original P=3 yield=0 nivel=1 procs=2 papel=folha tam=100000 espera_pai=0.002907 conquista=10.010780 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9983
+RESULTADO versao=original P=7 n=200000 delta=50000 yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=2.525215 verificacao=OK
+NIVEL versao=original P=7 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=2.524355 intercala=0.000859 ocupacao=0.0003
+NIVEL versao=original P=7 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003564 conquista=0.000000 espera_filhos=2.508289 intercala=0.000412 ocupacao=0.0002
+NIVEL versao=original P=7 yield=0 nivel=2 procs=4 papel=folha tam=50000 espera_pai=0.009933 conquista=2.489502 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9859
+RESULTADO versao=original P=15 n=200000 delta=25000 yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=0.689307 verificacao=OK
+NIVEL versao=original P=15 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.688403 intercala=0.000903 ocupacao=0.0013
+NIVEL versao=original P=15 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002388 conquista=0.000000 espera_filhos=0.678665 intercala=0.000418 ocupacao=0.0006
+NIVEL versao=original P=15 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.005988 conquista=0.000000 espera_filhos=0.667327 intercala=0.000221 ocupacao=0.0003
+NIVEL versao=original P=15 yield=0 nivel=3 procs=8 papel=folha tam=25000 espera_pai=0.012298 conquista=0.652746 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9470
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=original P=31 n=200000 delta=12500 yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.311052 verificacao=OK
+NIVEL versao=original P=31 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.310145 intercala=0.000906 ocupacao=0.0029
+NIVEL versao=original P=31 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002318 conquista=0.000000 espera_filhos=0.295532 intercala=0.000445 ocupacao=0.0014
+NIVEL versao=original P=31 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006390 conquista=0.000000 espera_filhos=0.284628 intercala=0.000281 ocupacao=0.0009
+NIVEL versao=original P=31 yield=0 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.009193 conquista=0.000000 espera_filhos=0.265581 intercala=0.000143 ocupacao=0.0005
+NIVEL versao=original P=31 yield=0 nivel=4 procs=16 papel=folha tam=12500 espera_pai=0.018082 conquista=0.222216 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.7144
+---- repeticao 5
+RESULTADO versao=original P=1 n=200000 delta=200000 yield=0 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.312205 verificacao=OK
+NIVEL versao=original P=1 yield=0 nivel=0 procs=1 papel=folha tam=200000 espera_pai=0.000000 conquista=40.312203 espera_filhos=0.000000 intercala=0.000000 ocupacao=1.0000
+RESULTADO versao=original P=3 n=200000 delta=100000 yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=10.028085 verificacao=OK
+NIVEL versao=original P=3 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=10.027212 intercala=0.000872 ocupacao=0.0001
+NIVEL versao=original P=3 yield=0 nivel=1 procs=2 papel=folha tam=100000 espera_pai=0.002688 conquista=10.011274 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9983
+RESULTADO versao=original P=7 n=200000 delta=50000 yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=2.540088 verificacao=OK
+NIVEL versao=original P=7 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=2.539242 intercala=0.000846 ocupacao=0.0003
+NIVEL versao=original P=7 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002962 conquista=0.000000 espera_filhos=2.526292 intercala=0.000435 ocupacao=0.0002
+NIVEL versao=original P=7 yield=0 nivel=2 procs=4 papel=folha tam=50000 espera_pai=0.009956 conquista=2.508212 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9875
+RESULTADO versao=original P=15 n=200000 delta=25000 yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=0.692147 verificacao=OK
+NIVEL versao=original P=15 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.691273 intercala=0.000875 ocupacao=0.0013
+NIVEL versao=original P=15 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002324 conquista=0.000000 espera_filhos=0.678444 intercala=0.000538 ocupacao=0.0008
+NIVEL versao=original P=15 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.005795 conquista=0.000000 espera_filhos=0.664751 intercala=0.000211 ocupacao=0.0003
+NIVEL versao=original P=15 yield=0 nivel=3 procs=8 papel=folha tam=25000 espera_pai=0.011816 conquista=0.651022 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9406
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=original P=31 n=200000 delta=12500 yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.315290 verificacao=OK
+NIVEL versao=original P=31 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.314307 intercala=0.000983 ocupacao=0.0031
+NIVEL versao=original P=31 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002333 conquista=0.000000 espera_filhos=0.301752 intercala=0.000531 ocupacao=0.0017
+NIVEL versao=original P=31 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.007805 conquista=0.000000 espera_filhos=0.288112 intercala=0.000282 ocupacao=0.0009
+NIVEL versao=original P=31 yield=0 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.011736 conquista=0.000000 espera_filhos=0.258332 intercala=0.000136 ocupacao=0.0004
+NIVEL versao=original P=31 yield=0 nivel=4 procs=16 papel=folha tam=12500 espera_pai=0.018415 conquista=0.224499 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.7120
+---- repeticao 6
+RESULTADO versao=original P=1 n=200000 delta=200000 yield=0 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.310671 verificacao=OK
+NIVEL versao=original P=1 yield=0 nivel=0 procs=1 papel=folha tam=200000 espera_pai=0.000000 conquista=40.310666 espera_filhos=0.000000 intercala=0.000000 ocupacao=1.0000
+RESULTADO versao=original P=3 n=200000 delta=100000 yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=10.029502 verificacao=OK
+NIVEL versao=original P=3 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=10.028652 intercala=0.000849 ocupacao=0.0001
+NIVEL versao=original P=3 yield=0 nivel=1 procs=2 papel=folha tam=100000 espera_pai=0.002559 conquista=10.012754 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9983
+RESULTADO versao=original P=7 n=200000 delta=50000 yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=2.516044 verificacao=OK
+NIVEL versao=original P=7 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=2.515201 intercala=0.000843 ocupacao=0.0003
+NIVEL versao=original P=7 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003117 conquista=0.000000 espera_filhos=2.501510 intercala=0.000433 ocupacao=0.0002
+NIVEL versao=original P=7 yield=0 nivel=2 procs=4 papel=folha tam=50000 espera_pai=0.009790 conquista=2.488526 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9891
+RESULTADO versao=original P=15 n=200000 delta=25000 yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=0.688969 verificacao=OK
+NIVEL versao=original P=15 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.688031 intercala=0.000937 ocupacao=0.0014
+NIVEL versao=original P=15 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002218 conquista=0.000000 espera_filhos=0.672277 intercala=0.000432 ocupacao=0.0006
+NIVEL versao=original P=15 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.005817 conquista=0.000000 espera_filhos=0.661195 intercala=0.000270 ocupacao=0.0004
+NIVEL versao=original P=15 yield=0 nivel=3 procs=8 papel=folha tam=25000 espera_pai=0.012255 conquista=0.649455 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9426
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=original P=31 n=200000 delta=12500 yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.307152 verificacao=OK
+NIVEL versao=original P=31 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.306188 intercala=0.000964 ocupacao=0.0031
+NIVEL versao=original P=31 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002329 conquista=0.000000 espera_filhos=0.293617 intercala=0.001040 ocupacao=0.0034
+NIVEL versao=original P=31 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006376 conquista=0.000000 espera_filhos=0.282469 intercala=0.000264 ocupacao=0.0009
+NIVEL versao=original P=31 yield=0 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.009277 conquista=0.000000 espera_filhos=0.257595 intercala=0.000134 ocupacao=0.0004
+NIVEL versao=original P=31 yield=0 nivel=4 procs=16 papel=folha tam=12500 espera_pai=0.018426 conquista=0.223109 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.7264
+---- repeticao 7
+RESULTADO versao=original P=1 n=200000 delta=200000 yield=0 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.316003 verificacao=OK
+NIVEL versao=original P=1 yield=0 nivel=0 procs=1 papel=folha tam=200000 espera_pai=0.000000 conquista=40.315998 espera_filhos=0.000000 intercala=0.000000 ocupacao=1.0000
+RESULTADO versao=original P=3 n=200000 delta=100000 yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=10.028544 verificacao=OK
+NIVEL versao=original P=3 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=10.027701 intercala=0.000843 ocupacao=0.0001
+NIVEL versao=original P=3 yield=0 nivel=1 procs=2 papel=folha tam=100000 espera_pai=0.002542 conquista=10.004484 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9976
+RESULTADO versao=original P=7 n=200000 delta=50000 yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=2.566517 verificacao=OK
+NIVEL versao=original P=7 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=2.565012 intercala=0.001504 ocupacao=0.0006
+NIVEL versao=original P=7 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003177 conquista=0.000000 espera_filhos=2.530701 intercala=0.000462 ocupacao=0.0002
+NIVEL versao=original P=7 yield=0 nivel=2 procs=4 papel=folha tam=50000 espera_pai=0.009183 conquista=2.505123 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9761
+RESULTADO versao=original P=15 n=200000 delta=25000 yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=0.794013 verificacao=OK
+NIVEL versao=original P=15 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.793119 intercala=0.000894 ocupacao=0.0011
+NIVEL versao=original P=15 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002346 conquista=0.000000 espera_filhos=0.728166 intercala=0.000435 ocupacao=0.0005
+NIVEL versao=original P=15 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.005932 conquista=0.000000 espera_filhos=0.707605 intercala=0.000224 ocupacao=0.0003
+NIVEL versao=original P=15 yield=0 nivel=3 procs=8 papel=folha tam=25000 espera_pai=0.012432 conquista=0.673608 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.8484
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=original P=31 n=200000 delta=12500 yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.306544 verificacao=OK
+NIVEL versao=original P=31 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.305590 intercala=0.000954 ocupacao=0.0031
+NIVEL versao=original P=31 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002390 conquista=0.000000 espera_filhos=0.288711 intercala=0.000459 ocupacao=0.0015
+NIVEL versao=original P=31 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006377 conquista=0.000000 espera_filhos=0.262220 intercala=0.000239 ocupacao=0.0008
+NIVEL versao=original P=31 yield=0 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.008956 conquista=0.000000 espera_filhos=0.248194 intercala=0.000138 ocupacao=0.0005
+NIVEL versao=original P=31 yield=0 nivel=4 procs=16 papel=folha tam=12500 espera_pai=0.017815 conquista=0.223776 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.7300
+---- repeticao 8
+RESULTADO versao=original P=1 n=200000 delta=200000 yield=0 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.323855 verificacao=OK
+NIVEL versao=original P=1 yield=0 nivel=0 procs=1 papel=folha tam=200000 espera_pai=0.000000 conquista=40.323849 espera_filhos=0.000000 intercala=0.000000 ocupacao=1.0000
+RESULTADO versao=original P=3 n=200000 delta=100000 yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=10.015024 verificacao=OK
+NIVEL versao=original P=3 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=10.014166 intercala=0.000858 ocupacao=0.0001
+NIVEL versao=original P=3 yield=0 nivel=1 procs=2 papel=folha tam=100000 espera_pai=0.002677 conquista=10.004068 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9989
+RESULTADO versao=original P=7 n=200000 delta=50000 yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=2.527302 verificacao=OK
+NIVEL versao=original P=7 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=2.526472 intercala=0.000829 ocupacao=0.0003
+NIVEL versao=original P=7 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003339 conquista=0.000000 espera_filhos=2.509270 intercala=0.000481 ocupacao=0.0002
+NIVEL versao=original P=7 yield=0 nivel=2 procs=4 papel=folha tam=50000 espera_pai=0.009183 conquista=2.491124 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9857
+RESULTADO versao=original P=15 n=200000 delta=25000 yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=0.687898 verificacao=OK
+NIVEL versao=original P=15 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.685925 intercala=0.001972 ocupacao=0.0029
+NIVEL versao=original P=15 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002314 conquista=0.000000 espera_filhos=0.670068 intercala=0.000435 ocupacao=0.0006
+NIVEL versao=original P=15 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.005776 conquista=0.000000 espera_filhos=0.661051 intercala=0.000226 ocupacao=0.0003
+NIVEL versao=original P=15 yield=0 nivel=3 procs=8 papel=folha tam=25000 espera_pai=0.012404 conquista=0.648581 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9428
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=original P=31 n=200000 delta=12500 yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.311295 verificacao=OK
+NIVEL versao=original P=31 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.310368 intercala=0.000927 ocupacao=0.0030
+NIVEL versao=original P=31 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002390 conquista=0.000000 espera_filhos=0.298464 intercala=0.000464 ocupacao=0.0015
+NIVEL versao=original P=31 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006382 conquista=0.000000 espera_filhos=0.283797 intercala=0.000304 ocupacao=0.0010
+NIVEL versao=original P=31 yield=0 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.008981 conquista=0.000000 espera_filhos=0.256523 intercala=0.000146 ocupacao=0.0005
+NIVEL versao=original P=31 yield=0 nivel=4 procs=16 papel=folha tam=12500 espera_pai=0.017665 conquista=0.224445 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.7210
+---- repeticao 9
+RESULTADO versao=original P=1 n=200000 delta=200000 yield=0 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.270413 verificacao=OK
+NIVEL versao=original P=1 yield=0 nivel=0 procs=1 papel=folha tam=200000 espera_pai=0.000000 conquista=40.270407 espera_filhos=0.000000 intercala=0.000000 ocupacao=1.0000
+RESULTADO versao=original P=3 n=200000 delta=100000 yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=10.029510 verificacao=OK
+NIVEL versao=original P=3 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=10.028660 intercala=0.000849 ocupacao=0.0001
+NIVEL versao=original P=3 yield=0 nivel=1 procs=2 papel=folha tam=100000 espera_pai=0.002447 conquista=10.012144 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9983
+RESULTADO versao=original P=7 n=200000 delta=50000 yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=2.564674 verificacao=OK
+NIVEL versao=original P=7 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=2.563779 intercala=0.000895 ocupacao=0.0003
+NIVEL versao=original P=7 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003156 conquista=0.000000 espera_filhos=2.534626 intercala=0.000426 ocupacao=0.0002
+NIVEL versao=original P=7 yield=0 nivel=2 procs=4 papel=folha tam=50000 espera_pai=0.009030 conquista=2.509555 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9785
+RESULTADO versao=original P=15 n=200000 delta=25000 yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=0.687818 verificacao=OK
+NIVEL versao=original P=15 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.686944 intercala=0.000874 ocupacao=0.0013
+NIVEL versao=original P=15 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002398 conquista=0.000000 espera_filhos=0.670839 intercala=0.000446 ocupacao=0.0006
+NIVEL versao=original P=15 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.005829 conquista=0.000000 espera_filhos=0.660767 intercala=0.000211 ocupacao=0.0003
+NIVEL versao=original P=15 yield=0 nivel=3 procs=8 papel=folha tam=25000 espera_pai=0.011869 conquista=0.649150 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9438
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=original P=31 n=200000 delta=12500 yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.298458 verificacao=OK
+NIVEL versao=original P=31 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.297510 intercala=0.000948 ocupacao=0.0032
+NIVEL versao=original P=31 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002585 conquista=0.000000 espera_filhos=0.287442 intercala=0.000454 ocupacao=0.0015
+NIVEL versao=original P=31 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006607 conquista=0.000000 espera_filhos=0.276212 intercala=0.000295 ocupacao=0.0010
+NIVEL versao=original P=31 yield=0 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.009501 conquista=0.000000 espera_filhos=0.257989 intercala=0.000135 ocupacao=0.0005
+NIVEL versao=original P=31 yield=0 nivel=4 procs=16 papel=folha tam=12500 espera_pai=0.018112 conquista=0.223446 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.7487
+---- repeticao 10
+RESULTADO versao=original P=1 n=200000 delta=200000 yield=0 folhas=1 menor_folha=200000 maior_folha=200000 tempo=40.335454 verificacao=OK
+NIVEL versao=original P=1 yield=0 nivel=0 procs=1 papel=folha tam=200000 espera_pai=0.000000 conquista=40.335452 espera_filhos=0.000000 intercala=0.000000 ocupacao=1.0000
+RESULTADO versao=original P=3 n=200000 delta=100000 yield=0 folhas=2 menor_folha=100000 maior_folha=100000 tempo=10.015352 verificacao=OK
+NIVEL versao=original P=3 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=10.014477 intercala=0.000875 ocupacao=0.0001
+NIVEL versao=original P=3 yield=0 nivel=1 procs=2 papel=folha tam=100000 espera_pai=0.002642 conquista=10.000223 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9985
+RESULTADO versao=original P=7 n=200000 delta=50000 yield=0 folhas=4 menor_folha=50000 maior_folha=50000 tempo=2.530929 verificacao=OK
+NIVEL versao=original P=7 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=2.530081 intercala=0.000847 ocupacao=0.0003
+NIVEL versao=original P=7 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.003372 conquista=0.000000 espera_filhos=2.519447 intercala=0.000399 ocupacao=0.0002
+NIVEL versao=original P=7 yield=0 nivel=2 procs=4 papel=folha tam=50000 espera_pai=0.010415 conquista=2.507957 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9909
+RESULTADO versao=original P=15 n=200000 delta=25000 yield=0 folhas=8 menor_folha=25000 maior_folha=25000 tempo=0.690189 verificacao=OK
+NIVEL versao=original P=15 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.689320 intercala=0.000868 ocupacao=0.0013
+NIVEL versao=original P=15 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002552 conquista=0.000000 espera_filhos=0.673442 intercala=0.000436 ocupacao=0.0006
+NIVEL versao=original P=15 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.005915 conquista=0.000000 espera_filhos=0.662102 intercala=0.000227 ocupacao=0.0003
+NIVEL versao=original P=15 yield=0 nivel=3 procs=8 papel=folha tam=25000 espera_pai=0.012150 conquista=0.649282 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.9407
+srun: Warning: can't honor --ntasks-per-node set to 16 which doesn't match the requested tasks 31 with the number of requested nodes 2. Ignoring --ntasks-per-node.
+RESULTADO versao=original P=31 n=200000 delta=12500 yield=0 folhas=16 menor_folha=12500 maior_folha=12500 tempo=0.299735 verificacao=OK
+NIVEL versao=original P=31 yield=0 nivel=0 procs=1 papel=interno tam=200000 espera_pai=0.000000 conquista=0.000000 espera_filhos=0.298758 intercala=0.000976 ocupacao=0.0033
+NIVEL versao=original P=31 yield=0 nivel=1 procs=2 papel=interno tam=100000 espera_pai=0.002342 conquista=0.000000 espera_filhos=0.284545 intercala=0.000509 ocupacao=0.0017
+NIVEL versao=original P=31 yield=0 nivel=2 procs=4 papel=interno tam=50000 espera_pai=0.006394 conquista=0.000000 espera_filhos=0.273876 intercala=0.000242 ocupacao=0.0008
+NIVEL versao=original P=31 yield=0 nivel=3 procs=8 papel=interno tam=25000 espera_pai=0.009186 conquista=0.000000 espera_filhos=0.250728 intercala=0.000149 ocupacao=0.0005
+NIVEL versao=original P=31 yield=0 nivel=4 procs=16 papel=folha tam=12500 espera_pai=0.017720 conquista=0.213747 espera_filhos=0.000000 intercala=0.000000 ocupacao=0.7131
